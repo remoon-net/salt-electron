@@ -1,2 +1,10 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+	import xhe from '$lib/xhe'
+
+	async function start() {
+		const ret = await xhe.start()
+		alert(`ohhhh ${ret.value}`)
+	}
+</script>
+
+<button onclick={start}>click me</button>
