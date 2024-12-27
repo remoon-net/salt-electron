@@ -73,6 +73,7 @@
 								return
 							}
 							if (prompt('请输入 "reset key" 以确认进行私钥重置') !== 'reset key') {
+								alert('不为 "reset key", 请重试')
 								return
 							}
 							return genkey()
