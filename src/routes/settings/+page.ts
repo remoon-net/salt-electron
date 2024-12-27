@@ -6,6 +6,6 @@ export async function load() {
 	const s = await xhe.get('status')
 	const status = JSON.parse(s) as Status
 	return {
-		config: status,
+		status: status,
 	}
 }

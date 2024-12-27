@@ -2,20 +2,20 @@
 	import { goto, invalidate } from '$app/navigation'
 	import { base64Tohex, hex2base64, type Config } from '$lib/config.js'
 	import { withPending } from '$lib/pending.svelte.js'
-	import xhe from '$lib/xhe.js'
+	import xhe, { Target } from '$lib/xhe.js'
 	import { tooltip } from '@remoon.net/bootstrap'
 
 	const { data } = $props()
-	const config = $state(data.config)
+	const status = $state(data.status)
 	const pending = withPending()
-	const nat = $state(config.NAT)
+	const nat = $state(status.NAT)
 	import { copyText, copy } from 'svelte-copy'
 
 	async function genkey() {
 		let raw = await xhe.get('genkey')
 		let [key, pubkey] = JSON.parse(raw) as [string, string]
-		config.Key = key
-		config.Pubkey = pubkey
+		status.Key = key
+		status.Pubkey = pubkey
 	}
 	async function handleSubmit(form: FormData) {
 		let config: Partial<Config> = {}
@@ -25,7 +25,13 @@
 		config.VTun = form.get('VTun') == 'VTun'
 		config.Port = Number(form.get('Port'))
 		config.NAT = Array.from(form.getAll('NAT') as string[]).filter((s) => !!s.trim())
-		await xhe.set('settings', '', JSON.stringify(config))
+		if (status.Running) {
+			await xhe.stop(Target.Device)
+			await xhe.set('settings', '', JSON.stringify(config))
+			await xhe.start(Target.Device)
+		} else {
+			await xhe.set('settings', '', JSON.stringify(config))
+		}
 		await invalidate('app:status')
 		await goto('/')
 	}
@@ -51,7 +57,7 @@
 					class="form-control"
 					placeholder="私钥"
 					required
-					value={hex2base64(config.Key)}
+					value={hex2base64(status.Key)}
 					disabled={pending.value}
 				/>
 				<button
@@ -80,7 +86,7 @@
 					class="form-control"
 					placeholder="公钥"
 					readonly
-					value={hex2base64(config.Pubkey)}
+					value={hex2base64(status.Pubkey)}
 					disabled={pending.value}
 				/>
 				<button
@@ -89,7 +95,7 @@
 					aria-label="复制本机公钥"
 					use:tooltip={{ title: '点击复制公钥' }}
 					onclick={(e) => {
-						let text = hex2base64(config.Pubkey)
+						let text = hex2base64(status.Pubkey)
 						copyText(text)
 					}}
 				>
@@ -123,7 +129,7 @@
 				id="tun"
 				class="form-control"
 				placeholder="公钥"
-				value={config.Tun}
+				value={status.Tun}
 				disabled={pending.value}
 			/>
 			<div class="form-text">使用 VTun 将不会将路由添加到系统中, 需要通过 Socks5 代理访问</div>
@@ -153,7 +159,7 @@
 					placeholder="公钥"
 					min="0"
 					max="65535"
-					value={config.Port}
+					value={status.Port}
 					disabled={pending.value}
 				/>
 				<div class="form-text">固定 Webrtc 端口, 以便防火墙放行</div>
