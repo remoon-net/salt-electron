@@ -29,6 +29,14 @@
 		await goto('/')
 	}
 
+	async function remove() {
+		let d = JSON.stringify({
+			Pubkey: peer.Pubkey,
+		})
+		await xhe.set('peer', 'remove', d)
+		await goto('/')
+	}
+
 	let psk = $state(peer.PSK)
 	async function genpsk() {
 		psk = await xhe.get('genpsk')
@@ -60,15 +68,34 @@
 		</div>
 		<div class="my-3">
 			<label for="pubkey" class="form-label">公钥 *</label>
-			<input
-				type="text"
-				name="Pubkey"
-				id="pubkey"
-				class="form-control"
-				placeholder="公钥"
-				value={hex2base64(peer.Pubkey)}
-				disabled={pending.value}
-			/>
+			<div class="input-group">
+				<input
+					type="text"
+					name="Pubkey"
+					id="pubkey"
+					class="form-control"
+					placeholder="公钥"
+					value={hex2base64(peer.Pubkey)}
+					disabled={pending.value}
+				/>
+				<button
+					type="button"
+					class="btn btn-outline-danger"
+					aria-label="delete route"
+					onclick={() => {
+						pending.call(() => {
+							let confirmed = confirm('确认是否移除该好友?')
+							if (!confirmed) {
+								return
+							}
+							remove()
+						})
+					}}
+					disabled={pending.value}
+				>
+					<i class="bi bi-trash3"></i>
+				</button>
+			</div>
 			<div class="form-text">好友的身份码</div>
 		</div>
 
