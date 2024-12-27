@@ -43,7 +43,7 @@
 			e.preventDefault()
 			var form = new FormData(e.currentTarget)
 			pending.call(() => {
-				handleSubmit(form)
+				return handleSubmit(form)
 			})
 		}}
 	>
@@ -68,7 +68,15 @@
 					use:tooltip
 					disabled={pending.value}
 					onclick={() => {
-						pending.call(genkey)
+						pending.call(() => {
+							if (!confirm('警告! 重置私钥将会导致你与已有的好友失去连接')) {
+								return
+							}
+							if (prompt('请输入 "reset key" 以确认进行私钥重置') !== 'reset key') {
+								return
+							}
+							return genkey()
+						})
 					}}
 				>
 					<i class="bi bi-arrow-clockwise"></i>
