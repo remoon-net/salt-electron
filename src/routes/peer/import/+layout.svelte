@@ -7,10 +7,10 @@
 	</div>
 	<div class="col text-center">www</div>
 	<div class="col col-auto">
-		<label for="submit" class="btn">
+		<button class="btn">
 			<i class="bi bi-floppy"></i>
 			保存
-		</label>
+		</button>
 	</div>
 </div>
 <slot></slot>

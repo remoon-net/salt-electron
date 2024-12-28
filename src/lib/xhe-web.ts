@@ -1,21 +1,23 @@
-import { WebPlugin } from '@capacitor/core'
+import './wasm_exec'
+if (!WebAssembly.instantiateStreaming) {
+	WebAssembly.instantiateStreaming = async (resp, importObject) => {
+		const source = await (await resp).arrayBuffer()
+		return await WebAssembly.instantiate(source, importObject)
+	}
+}
 
+import { assets } from '$app/paths'
 import type { XhePlugin } from './xhe'
 
-export class XheWeb extends WebPlugin implements XhePlugin {
-	async echo(options: { value: string }): Promise<{ value: string }> {
-		return { value: options.value }
-	}
-	async start(): Promise<{ value: string }> {
-		return { value: 'started' }
-	}
-	async stop(): Promise<{ value: string }> {
-		return { value: 'stopped' }
-	}
-	async set(typ: string, cfg: string): Promise<string> {
-		return ''
-	}
-	async get(typ: string): Promise<string> {
-		return ''
+export async function load() {
+	const go = new Go()
+	const wasm = fetch(`${assets}/wasm/libvpn.wasm`)
+	const { instance } = await WebAssembly.instantiateStreaming(wasm, go.importObject)
+	const proc = go.run(instance)
+	// @ts-ignore
+	const _exports = go._exports as XhePlugin
+	return {
+		process: proc,
+		..._exports,
 	}
 }

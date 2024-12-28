@@ -39,7 +39,7 @@
 			e.preventDefault()
 			let form = new FormData(e.currentTarget)
 			pending.call(() => {
-				add(form)
+				return add(form)
 			})
 		}}
 	>
