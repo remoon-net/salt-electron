@@ -14,9 +14,8 @@ import libvpn.Libvpn;
 public class XhePlugin extends Plugin {
     @Override
     public void load() {
-        var path = getContext().getFilesDir().getAbsolutePath();
         try {
-            Libvpn.set("android_release_version",String.valueOf(android.os.Build.VERSION.RELEASE));
+            Libvpn.set("android_release_version","",String.valueOf(android.os.Build.VERSION.RELEASE));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -28,24 +27,40 @@ public class XhePlugin extends Plugin {
     @PluginMethod()
     public void start(PluginCall call) throws Exception {
         var ctx = getContext();
-        var intent = android.net.VpnService.prepare(ctx);
+        var intent = VpnService.prepare(ctx);
         if( intent != null) {
             startActivityForResult(call,intent,VPN_REQUEST_CODE);
         }
 
-        var vpn = new Intent(ctx, net.remoon.salt.VpnService.class);
+        var vpn = new Intent(ctx, VpnService.class);
         ctx.startService(vpn);
 
-        JSObject ret = new JSObject();
-        ret.put("value", "666");
-        call.resolve(ret);
+        call.resolve();
     }
 
     @PluginMethod()
-    public void stop(PluginCall call) {
+    public void stop(PluginCall call) throws Exception {
+        var ctx = getContext();
+        var vpn = new Intent(ctx, VpnService.class);
+        ctx.stopService(vpn);
+        call.resolve();
+    }
 
+    @PluginMethod()
+    public void set(PluginCall call) throws Exception {
+        var selector = call.getString("selector");
+        var action = call.getString("action");
+        var value = call.getString("value");
+        Libvpn.set(selector, action, value);
+        call.resolve();
+    }
+
+    @PluginMethod()
+    public void get(PluginCall call) throws Exception {
+        var selector = call.getString("selector");
+        var s = Libvpn.get(selector);
         JSObject ret = new JSObject();
-        ret.put("value", "stopped");
+        ret.put("value", s);
         call.resolve(ret);
     }
 

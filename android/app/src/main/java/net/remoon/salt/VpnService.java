@@ -33,13 +33,13 @@ public class VpnService extends android.net.VpnService {
         builder.addDisallowedApplication("net.remoon.salt");
         var tun = builder.establish();
         var fd = tun.detachFd();
-        Libvpn.set("Tun", String.valueOf(fd));
-        Libvpn.start();
+        Libvpn.set("fd","", String.valueOf(fd));
+        Libvpn.start(Libvpn.TargetAll);
     }
 
     @Override
     public void onDestroy() {
-        Libvpn.stop();
+        Libvpn.stop(Libvpn.TargetAll);
         super.onDestroy();
     }
 
