@@ -9,7 +9,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check ."
+		"lint": "prettier --check .",
+		"capacitor:copy:before": "rm build/wasm/libvpn.wasm"
 	},
 	"devDependencies": {
 		"@capacitor/cli": "^6.2.0",
