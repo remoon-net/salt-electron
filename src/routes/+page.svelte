@@ -1,6 +1,6 @@
 <script lang="ts">
 	const { data } = $props()
-	let status = $state(data.status)
+	let status = $derived(data.status)
 	import Peer from './peer.svelte'
 	import Panel from './panel.svelte'
 	import Op from './op.svelte'
