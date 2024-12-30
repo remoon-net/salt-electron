@@ -8,7 +8,7 @@
 	const { data } = $props()
 	const status = $derived(data.status)
 	let showNew = $state(true)
-	let iceTags = $state(['relay', 'custom'])
+	let iceTags = $derived(data.status.ICETags.filter((s) => s !== 'direct'))
 	const pending = withPending(false)
 
 	async function addLink(form: FormData) {
@@ -33,7 +33,8 @@
 		u.hash = ''
 		return u.toString()
 	}
-	$inspect(data)
+
+	import ICE from './ICE.svelte'
 </script>
 
 <div class="container">
@@ -160,7 +161,7 @@
 	<div class="my-3">
 		<div class="row mb-2 align-item-center">
 			<div class="col">
-				<label for="key" class="form-label mb-0">ICE</label>
+				<div class="form-label mb-0">ICE</div>
 			</div>
 			<div class="col col-auto">
 				<a href="/panel/ice-new/" class="btn btn-sm btn-outline-primary" aria-label="add ice">
@@ -173,7 +174,7 @@
 				<div class="col">
 					<div class="input-group">
 						<button class="btn btn-sm btn-outline-secondary">{tag}</button>
-						{#if !['direct', 'relay'].includes(tag)}
+						{#if false && !['direct', 'relay'].includes(tag)}
 							<button type="button" class="btn btn-sm btn-outline-secondary" aria-label="delete">
 								<i class="bi bi-x"></i>
 							</button>
@@ -181,26 +182,11 @@
 					</div>
 				</div>
 			{/each}
-			<div class="col">
-				<button class="btn btn-sm btn-outline-primary" aria-label="add">
-					<i class="bi bi-plus-lg"></i>
-				</button>
-			</div>
 		</div>
 	</div>
-	{#each status.ICE as ice}
+	{#each status.ICE as ice, i}
 		<div class="my-3">
-			<textarea class="form-control" value={ice} rows="2" name="" id=""></textarea>
-			<div class="row g-2 align-items-center">
-				<div class="col col-auto">
-					<button type="button" class="btn btn-sm btn-outline-danger" aria-label="delete">
-						<i class="bi bi-trash3"></i>
-					</button>
-				</div>
-				<div class="col">
-					<Select class="text-end" options={status.ICETags}></Select>
-				</div>
-			</div>
+			<ICE allTags={iceTags} {ice} index={i}></ICE>
 		</div>
 	{/each}
 </div>
