@@ -6,7 +6,6 @@
 
 	const { data } = $props()
 	const isUpdate = $derived(data.index !== null)
-	$inspect(isUpdate, data.index)
 
 	let tags = $state(['relay'])
 	let ice = $state('')
