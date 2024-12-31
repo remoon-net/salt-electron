@@ -9,7 +9,7 @@
 	<div class="col col-auto">
 		<label for="submit" class="btn">
 			<i class="bi bi-floppy"></i>
-			保存
+			添加
 		</label>
 	</div>
 </div>

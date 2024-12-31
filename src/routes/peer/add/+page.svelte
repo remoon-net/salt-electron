@@ -12,7 +12,7 @@
 	const pending = withPending(false)
 	let showMore = $state(false)
 	let ices = $state(['direct', 'relay'])
-	let whips = $state(status.Linker.map((v) => v.Endpoint))
+	let whips = $state([] as string[])
 	let psk = $state('')
 	async function genpsk() {
 		psk = await xhe.get('genpsk')
@@ -24,7 +24,7 @@
 			PSK: psk,
 			ICE: ices,
 			Auto: 0,
-			WHIP: [],
+			WHIP: whips.filter((s) => !!s.trim()),
 			Allow: allows,
 		}
 		await xhe.set('peer', 'add', JSON.stringify(peer))
@@ -128,18 +128,63 @@
 				</div>
 			</div>
 			<div class="my-3">
-				<label for="whip" class="form-label">WHIP</label>
-				{#if status.Linker.length === 0}
-					<input
-						type="text"
-						class="form-control is-invalid"
-						readonly
-						value="目前无信令服务器, 无法生成可连接的导入链接"
-					/>
-				{:else}
-					<Select options={status.Linker.map((v) => v.Endpoint)} bind:values={whips} expand />
-				{/if}
-				<div class="form-text">好友将通过此信令服务器连接你</div>
+				<div class="row align-items-center mb-2">
+					<div class="col">
+						<label for="whip-last" class="form-label mb-0">WHIP</label>
+					</div>
+					<div class="col col-auto">
+						<div class="input-group">
+							<div class="input-group-text">
+								<input
+									type="checkbox"
+									class="form-check-input mt-0 me-1"
+									name="Auto"
+									id="auto_start"
+									autocomplete="off"
+									disabled={whips.length == 0 || pending.value}
+								/>
+								<label class="from-check-label" for="auto_start">自动连接</label>
+							</div>
+							<button
+								type="button"
+								class="btn btn-sm btn-outline-primary"
+								aria-label="add new route field"
+								onclick={() => {
+									whips.push('')
+								}}
+								disabled={pending.value}
+							>
+								<i class="bi bi-plus-lg"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				{#each whips as whip, i}
+					<div class="input-group mb-2">
+						<input
+							type="url"
+							name="WHIP"
+							id={i === allows.length - 1 ? 'whip-last' : ''}
+							class="form-control"
+							placeholder="WHIP"
+							bind:value={whips[i]}
+							required
+							disabled={pending.value}
+						/>
+						<button
+							type="button"
+							class="btn btn-outline-danger"
+							aria-label="delete route"
+							onclick={() => {
+								whips.splice(i, 1)
+							}}
+							disabled={pending.value}
+						>
+							<i class="bi bi-trash3"></i>
+						</button>
+					</div>
+				{/each}
+				<div class="form-text">WHIP用于和好友建立连接</div>
 			</div>
 			<div class="my-3">
 				<div class="row align-items-center mb-2">
@@ -188,9 +233,7 @@
 			</div>
 		</div>
 		<div class="my-3">
-			<button type="submit" id="submit" class="btn btn-primary w-100">
-				添加并生成给好友的导入链接
-			</button>
+			<button type="submit" id="submit" class="btn btn-primary w-100"> 添加好友节点 </button>
 		</div>
 	</form>
 </div>
