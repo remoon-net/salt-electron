@@ -217,6 +217,7 @@
 						placeholder="路由"
 						value={a}
 						disabled={pending.value}
+						required
 					/>
 					<button
 						type="button"
