@@ -33,7 +33,7 @@
 <div class="row align-items-center my-3">
 	<div class="col">
 		<div class="pubkey">
-			<a href="/panel/">
+			<a href="/panel/controller/">
 				{status.Tun}
 			</a>
 		</div>

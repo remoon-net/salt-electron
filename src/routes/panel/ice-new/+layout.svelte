@@ -7,7 +7,7 @@
 <div class="row align-items-center">
 	<div class="col col-auto">
 		<a
-			href="/panel/"
+			href="/panel/controller/"
 			type="button"
 			class="btn"
 			onclick={(e) => {

@@ -29,7 +29,7 @@
 			await xhe.set('ice', 'add', ice)
 		}
 		await invalidate('app:status')
-		await goto('/panel')
+		await goto('/panel/controller/')
 	}
 
 	let customTags = $state([] as string[])
