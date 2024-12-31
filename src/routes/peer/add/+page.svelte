@@ -55,7 +55,7 @@
 		}}
 	>
 		<div class="my-3">
-			<label for="name" class="form-label">好友昵称</label>
+			<label for="name" class="form-label">好友昵称 *</label>
 			<input
 				type="text"
 				name="Name"
@@ -64,6 +64,7 @@
 				placeholder="昵称"
 				value={data.peer?.Name}
 				disabled={pending.value}
+				required
 			/>
 			<div class="form-text">便于分辨好友</div>
 		</div>

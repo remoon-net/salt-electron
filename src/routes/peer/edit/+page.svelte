@@ -54,7 +54,7 @@
 		}}
 	>
 		<div class="my-3">
-			<label for="name" class="form-label">好友昵称</label>
+			<label for="name" class="form-label">好友昵称 *</label>
 			<input
 				type="text"
 				name="Name"
@@ -63,6 +63,7 @@
 				placeholder="昵称"
 				value={peer.Name}
 				disabled={pending.value}
+				required
 			/>
 			<div class="form-text">便于识别</div>
 		</div>
