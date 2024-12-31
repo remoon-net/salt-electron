@@ -12,8 +12,8 @@
 	const pending = withPending(false)
 	let showMore = $state(false)
 	let ices = $state(['direct', 'relay'])
-	let whips = $state([] as string[])
-	let psk = $state('')
+	let whips = $state(data.peer?.WHIP ?? [])
+	let psk = $state(data.peer?.PSK ?? '')
 	async function genpsk() {
 		psk = await xhe.get('genpsk')
 	}
@@ -62,6 +62,7 @@
 				id="name"
 				class="form-control"
 				placeholder="昵称"
+				value={data.peer?.Name}
 				disabled={pending.value}
 			/>
 			<div class="form-text">便于分辨好友</div>
@@ -75,6 +76,7 @@
 				class="form-control"
 				placeholder="公钥"
 				required
+				value={data.peer?.Pubkey}
 				disabled={pending.value}
 			/>
 			<div class="form-text">好友公钥</div>
