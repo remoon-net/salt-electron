@@ -10,7 +10,7 @@
 	const allows = $state(data.ips)
 
 	const pending = withPending(false)
-	let showMore = $state(false)
+	let showMore = $state(data.peer !== null)
 	let ices = $state(['direct', 'relay'])
 	let whips = $state(data.peer?.WHIP ?? [])
 	let psk = $state(data.peer?.PSK ?? '')
@@ -100,6 +100,7 @@
 		<div
 			id="more"
 			class="collapse"
+			class:show={showMore}
 			use:collapse={{ toggle: false }}
 			onshow.bs.collapse={() => {
 				showMore = true
