@@ -35,6 +35,21 @@
 	}
 
 	import ICE from './ICE.svelte'
+	let selectedTags = $state([])
+	let displayICEs = $derived.by(() => {
+		return status.ICE.map((ice, index) => ({ ice, index })).filter(({ ice }) => {
+			if (selectedTags.length === 0) {
+				return true
+			}
+			ice = ice + ','
+			for (let t of selectedTags) {
+				if (ice.indexOf(t + ',') !== -1) {
+					return true
+				}
+			}
+			return false
+		})
+	})
 </script>
 
 <div class="container">
@@ -171,22 +186,24 @@
 		</div>
 		<div class="row row-cols-auto mb-2 flex-wrap g-2">
 			{#each iceTags as tag}
+				{@const id = `ice-tag-${tag}`}
 				<div class="col">
-					<div class="input-group">
-						<button class="btn btn-sm btn-outline-secondary">{tag}</button>
-						{#if false && !['direct', 'relay'].includes(tag)}
-							<button type="button" class="btn btn-sm btn-outline-secondary" aria-label="delete">
-								<i class="bi bi-x"></i>
-							</button>
-						{/if}
-					</div>
+					<input
+						type="checkbox"
+						class="btn-check"
+						{id}
+						autocomplete="off"
+						value={tag}
+						bind:group={selectedTags}
+					/>
+					<label for={id} class="btn btn-sm btn-outline-secondary">{tag}</label>
 				</div>
 			{/each}
 		</div>
 	</div>
-	{#each status.ICE as ice, i}
+	{#each displayICEs as { ice, index }}
 		<div class="my-3">
-			<ICE allTags={iceTags} {ice} index={i}></ICE>
+			<ICE allTags={iceTags} {ice} {index}></ICE>
 		</div>
 	{/each}
 </div>
