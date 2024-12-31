@@ -27,6 +27,17 @@
 			WHIP: whips.filter((s) => !!s.trim()),
 			Allow: allows,
 		}
+		{
+			let index = status.Peer.findIndex((s) => {
+				return s.Pubkey === peer.Pubkey
+			})
+			if (index != -1) {
+				let name = status.Peer[index].Name
+				if (!confirm(`有相同公钥的好友节点(${!!name ? name : '未命名'})存在, 是否进行替换?`)) {
+					return
+				}
+			}
+		}
 		await xhe.set('peer', 'add', JSON.stringify(peer))
 		await invalidate('app:status')
 		await goto('/')
