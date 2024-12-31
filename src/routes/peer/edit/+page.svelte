@@ -165,12 +165,12 @@
 			{#each whips as whip, i}
 				<div class="input-group mb-2">
 					<input
-						type="text"
+						type="url"
 						name="WHIP"
 						id={i === allows.length - 1 ? 'whip-last' : ''}
 						class="form-control"
 						placeholder="WHIP"
-						value={whip}
+						bind:value={whips[i]}
 						disabled={pending.value}
 					/>
 					<button
