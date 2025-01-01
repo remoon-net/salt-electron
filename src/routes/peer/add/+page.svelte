@@ -40,7 +40,11 @@
 		}
 		await xhe.set('peer', 'add', JSON.stringify(peer))
 		await invalidate('app:status')
-		await goto(`/peer/edit/?pubkey=${peer.Pubkey}#linker-gen`)
+		if (data.peer) {
+			await goto(`/`)
+		} else {
+			await goto(`/peer/edit/?pubkey=${peer.Pubkey}#linker-gen`)
+		}
 	}
 </script>
 
@@ -76,27 +80,29 @@
 				class="form-control"
 				placeholder="公钥"
 				required
-				value={data.peer?.Pubkey}
+				value={data.peer?.Pubkey ? hex2base64(data.peer?.Pubkey) : ''}
 				disabled={pending.value}
 			/>
 			<div class="form-text">节点公钥</div>
 		</div>
-		<div class="text-center">
-			<button
-				type="button"
-				class="btn btn-sm more"
-				data-bs-toggle="collapse"
-				data-bs-target="#more"
-			>
-				{#if showMore}
-					<i class="bi bi-chevron-compact-up"></i>
-					<br />收起高级选项
-				{:else}
-					展开高级选项<br />
-					<i class="bi bi-chevron-compact-down"></i>
-				{/if}
-			</button>
-		</div>
+		{#if !data.peer}
+			<div class="text-center">
+				<button
+					type="button"
+					class="btn btn-sm more"
+					data-bs-toggle="collapse"
+					data-bs-target="#more"
+				>
+					{#if showMore}
+						<i class="bi bi-chevron-compact-up"></i>
+						<br />收起高级选项
+					{:else}
+						展开高级选项<br />
+						<i class="bi bi-chevron-compact-down"></i>
+					{/if}
+				</button>
+			</div>
+		{/if}
 		<div
 			id="more"
 			class="collapse"
@@ -120,6 +126,7 @@
 						class="form-control"
 						placeholder="共享密钥"
 						disabled={pending.value}
+						readonly={!!data.peer}
 					/>
 					<button
 						class="btn btn-outline-secondary"
@@ -128,6 +135,7 @@
 						title="点击随机生成共享密钥"
 						use:tooltip
 						onclick={genpsk}
+						disabled={!!data.peer}
 					>
 						<i class="bi bi-arrow-clockwise"></i>
 					</button>

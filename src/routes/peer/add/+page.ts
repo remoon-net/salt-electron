@@ -6,11 +6,9 @@ export async function load({ url }) {
 	const status = JSON.parse(s) as Status
 	const ips = JSON.parse(await xhe.get('nat_next_ips')) as string[]
 	let peer: Peer | null = null
-	if (url.searchParams.has('import')) {
-		let s = sessionStorage.getItem('temp-import-peer')
-		if (typeof s === 'string') {
-			peer = JSON.parse(s)
-		}
+	if (url.searchParams.get('peer') === 'share') {
+		let s = await xhe.get('peer.share.decoded')
+		peer = JSON.parse(s)
 	}
 	return {
 		status,
