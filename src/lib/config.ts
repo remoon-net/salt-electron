@@ -1,5 +1,6 @@
 export interface Config {
 	Link: string[]
+	Name: string
 	Key: string
 	Port: number
 	Tun: string

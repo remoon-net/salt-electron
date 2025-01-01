@@ -5,7 +5,7 @@
 			主页
 		</a>
 	</div>
-	<div class="col text-center">www</div>
+	<div class="col text-center">添加节点</div>
 	<div class="col col-auto">
 		<label for="submit" class="btn">
 			<i class="bi bi-floppy"></i>

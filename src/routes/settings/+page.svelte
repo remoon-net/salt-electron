@@ -22,6 +22,7 @@
 		let key = form.get('Key') as string
 		config.Key = base64Tohex(key)
 		config.Tun = form.get('Tun') as string
+		config.Name = form.get('Name') as string
 		config.VTun = form.get('VTun') == 'VTun'
 		config.Port = Number(form.get('Port'))
 		config.NAT = Array.from(form.getAll('NAT') as string[]).filter((s) => !!s.trim())
@@ -47,6 +48,22 @@
 			})
 		}}
 	>
+		<div class="my-3">
+			<label for="nickname" class="form-label">此节点昵称</label>
+			<div class="input-group">
+				<input
+					type="text"
+					name="Name"
+					id="nickname"
+					class="form-control"
+					placeholder="昵称"
+					required
+					value={status.Name}
+					disabled={pending.value}
+				/>
+			</div>
+			<div class="form-text">用于生成节点链接, 更具辨识度</div>
+		</div>
 		<div class="my-3">
 			<label for="key" class="form-label">私钥 *</label>
 			<div class="input-group">

@@ -41,8 +41,11 @@
 	async function genpsk() {
 		psk = await xhe.get('genpsk')
 	}
+
+	import Linker from './Linker.svelte'
 </script>
 
+<Linker {status} {peer}></Linker>
 <div class="container">
 	<form
 		onsubmit={(e) => {
@@ -54,7 +57,7 @@
 		}}
 	>
 		<div class="my-3">
-			<label for="name" class="form-label">好友昵称 *</label>
+			<label for="name" class="form-label">节点昵称 *</label>
 			<input
 				type="text"
 				name="Name"
@@ -63,7 +66,6 @@
 				placeholder="昵称"
 				value={peer.Name}
 				disabled={pending.value}
-				required
 			/>
 			<div class="form-text">便于识别</div>
 		</div>
@@ -97,7 +99,7 @@
 					<i class="bi bi-trash3"></i>
 				</button>
 			</div>
-			<div class="form-text">好友的身份码</div>
+			<div class="form-text">节点公钥, 唯一标识</div>
 		</div>
 
 		<div class="my-3">
@@ -187,7 +189,7 @@
 					</button>
 				</div>
 			{/each}
-			<div class="form-text">WHIP用于和好友建立连接</div>
+			<div class="form-text">WHIP信令服务器用于和节点建立连接</div>
 		</div>
 		<div class="my-3">
 			<div class="row align-items-center mb-2">

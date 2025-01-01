@@ -40,7 +40,7 @@
 		}
 		await xhe.set('peer', 'add', JSON.stringify(peer))
 		await invalidate('app:status')
-		await goto('/')
+		await goto(`/peer/edit/?pubkey=${peer.Pubkey}#linker-gen`)
 	}
 </script>
 
@@ -55,7 +55,7 @@
 		}}
 	>
 		<div class="my-3">
-			<label for="name" class="form-label">好友昵称 *</label>
+			<label for="name" class="form-label">节点昵称</label>
 			<input
 				type="text"
 				name="Name"
@@ -64,9 +64,8 @@
 				placeholder="昵称"
 				value={data.peer?.Name}
 				disabled={pending.value}
-				required
 			/>
-			<div class="form-text">便于分辨好友</div>
+			<div class="form-text">便于分辨节点</div>
 		</div>
 		<div class="my-3">
 			<label for="pubkey" class="form-label">公钥 *</label>
@@ -80,7 +79,7 @@
 				value={data.peer?.Pubkey}
 				disabled={pending.value}
 			/>
-			<div class="form-text">好友公钥</div>
+			<div class="form-text">节点公钥</div>
 		</div>
 		<div class="text-center">
 			<button

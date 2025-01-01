@@ -5,12 +5,12 @@
 			主页
 		</a>
 	</div>
-	<div class="col text-center">www</div>
+	<div class="col text-center">解析节点链接</div>
 	<div class="col col-auto">
-		<button class="btn">
-			<i class="bi bi-floppy"></i>
-			保存
-		</button>
+		<label for="submit" class="btn">
+			<i class="bi bi-node-plus"></i>
+			解析
+		</label>
 	</div>
 </div>
 <slot></slot>

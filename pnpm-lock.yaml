@@ -36,6 +36,9 @@ importers:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^4.0.0
         version: 4.0.1(svelte@5.2.7)(vite@5.4.11(@types/node@22.9.3)(sass-embedded@1.81.0))
+      '@types/bootstrap':
+        specifier: ^5.2.10
+        version: 5.2.10
       '@types/golang-wasm-exec':
         specifier: ^1.15.2
         version: 1.15.2
@@ -437,6 +440,9 @@ packages:
     peerDependencies:
       svelte: ^5.0.0-next.96 || ^5.0.0
       vite: ^5.0.0
+
+  '@types/bootstrap@5.2.10':
+    resolution: {integrity: sha512-F2X+cd6551tep0MvVZ6nM8v7XgGN/twpdNDjqS1TUM7YFNEtQYWk+dKAnH+T1gr6QgCoGMPl487xw/9hXooa2g==}
 
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
@@ -1487,6 +1493,10 @@ snapshots:
       vitefu: 1.0.3(vite@5.4.11(@types/node@22.9.3)(sass-embedded@1.81.0))
     transitivePeerDependencies:
       - supports-color
+
+  '@types/bootstrap@5.2.10':
+    dependencies:
+      '@popperjs/core': 2.11.8
 
   '@types/cookie@0.6.0': {}
 

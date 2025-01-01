@@ -20,6 +20,7 @@
 		"@sveltejs/adapter-static": "^3.0.6",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@types/bootstrap": "^5.2.10",
 		"@types/golang-wasm-exec": "^1.15.2",
 		"@types/luxon": "^3.4.2",
 		"bootstrap": "^5.3.3",

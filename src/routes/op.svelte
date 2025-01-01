@@ -30,14 +30,14 @@
 			class="btn btn-outline-primary btn-sm"
 			aria-label="add peer"
 			use:tooltip
-			title="添加好友"
+			title="添加节点"
 			data-sveltekit-preload-data={false}
 		>
 			<i class="bi bi-plus-lg"></i>
 		</a>
 	</div>
 	<div>
-		<a href="/peer/import/" class="btn btn-outline-primary w-100">导入好友链接</a>
+		<a href="/peer/import/" class="btn btn-outline-primary w-100">导入节点链接</a>
 	</div>
 </div>
 
