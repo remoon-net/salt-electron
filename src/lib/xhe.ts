@@ -39,6 +39,7 @@ export async function save() {
 export async function load() {
 	let { value } = await Preferences.get({ key: 'config' })
 	if (!value) {
+		await save()
 		return
 	}
 	return Xhe.set({
