@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation'
 	import { hex2base64, type LinkerStatus, type Status } from '$lib/config'
+	import { withPending } from '$lib/pending.svelte'
 
 	const { status }: { status: Status } = $props()
 	import xhe, { Target } from '$lib/xhe'
@@ -28,6 +29,8 @@
 		}
 		return DisplayStatus.Unkown
 	}
+
+	const pending = withPending()
 </script>
 
 <div class="row align-items-center my-3">
@@ -51,11 +54,23 @@
 	</div>
 	<div class="col col-auto text-end">
 		{#if status.Running}
-			<button class="btn btn-outline-primary" aria-label="start" type="button" onclick={stop}>
+			<button
+				class="btn btn-outline-primary"
+				aria-label="start"
+				type="button"
+				onclick={() => pending.call(stop)}
+				disabled={pending.value}
+			>
 				<i class="bi bi-pause"></i>
 			</button>
 		{:else}
-			<button class="btn btn-outline-primary" aria-label="start" type="button" onclick={start}>
+			<button
+				class="btn btn-outline-primary"
+				aria-label="start"
+				type="button"
+				onclick={() => pending.call(start)}
+				disabled={pending.value}
+			>
 				<i class="bi bi-play"></i>
 			</button>
 		{/if}
