@@ -144,6 +144,7 @@
 							id="vtun"
 							value="VTun"
 							autocomplete="off"
+							checked={status.VTun}
 						/>
 						<label class="from-check-label" for="vtun">VTun</label>
 					</div>
