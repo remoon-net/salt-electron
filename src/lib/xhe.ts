@@ -1,4 +1,4 @@
-import { registerPlugin } from '@capacitor/core'
+import { Capacitor, registerPlugin } from '@capacitor/core'
 import { Preferences } from '@capacitor/preferences'
 
 export const enum Target {
@@ -24,8 +24,19 @@ export interface XhePlugin {
 
 import { browser } from '$app/environment'
 
+const platform = Capacitor.getPlatform()
 const Xhe = registerPlugin<XhePluginNative>('Xhe', {
-	web: import('./xhe-web').then(({ load }) => (browser ? load() : null)),
+	web: async () => {
+		if (platform !== 'web') {
+			return null
+		}
+		if (!browser) {
+			return null
+		}
+		const { load } = await import('./xhe-web')
+		return load()
+	},
+	electron: () => (window as any).CapacitorCustomPlatform.plugins.Xhe,
 })
 
 export async function save() {
