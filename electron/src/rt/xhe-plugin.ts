@@ -7,3 +7,8 @@ export const XhePlugin: XhePluginNative = {
 	get: (opts) => ipcRenderer.invoke('xhe-plugin-get', opts),
 	set: (opts) => ipcRenderer.invoke('xhe-plugin-set', opts),
 }
+
+export const XhePreferencesPlugin = {
+	get: (opts) => ipcRenderer.invoke('xhe-preferences-get', opts),
+	set: (opts) => ipcRenderer.invoke('xhe-preferences-set', opts),
+}

@@ -1,7 +1,7 @@
 import { randomBytes } from 'crypto'
 import { ipcRenderer, contextBridge } from 'electron'
 import { EventEmitter } from 'events'
-import { XhePlugin } from './xhe-plugin'
+import { XhePlugin, XhePreferencesPlugin } from './xhe-plugin'
 
 ////////////////////////////////////////////////////////
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -14,6 +14,8 @@ const contextApi: {
 } = {
 	// @ts-ignore
 	Xhe: XhePlugin,
+	// @ts-ignore
+	XhePreferences: XhePreferencesPlugin,
 }
 
 Object.keys(plugins).forEach((pluginKey) => {

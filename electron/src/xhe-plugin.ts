@@ -134,3 +134,17 @@ export async function load() {
 
 	return xhe
 }
+
+import Store from 'electron-store'
+
+const store = new Store()
+
+ipcMain.handle('xhe-preferences-set', (e, opts) => {
+	// @ts-ignore
+	return store.set(opts.key, opts.value)
+})
+ipcMain.handle('xhe-preferences-get', (e, opts) => {
+	// @ts-ignore
+	const value = store.get(opts.key, null)
+	return { value }
+})

@@ -1,5 +1,5 @@
 import { Capacitor, registerPlugin } from '@capacitor/core'
-import { Preferences } from '@capacitor/preferences'
+import { Preferences } from './preferences'
 
 export const enum Target {
 	None = 0b00,
