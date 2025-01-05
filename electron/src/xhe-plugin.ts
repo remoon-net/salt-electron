@@ -58,7 +58,19 @@ export async function load() {
 		w.getWriter(),
 	)
 
-	const proc = spawn('pkexec', [bin], { stdio: ['pipe', 'pipe', 'inherit'] })
+	let cmd = []
+	switch (process.platform) {
+		case 'linux':
+			cmd = ['pkexec', bin]
+			break
+		case 'win32':
+			cmd = [bin]
+			break
+		default:
+			throw new Error(`This platform "${process.platform}" is not supported now.`)
+	}
+
+	const proc = spawn(cmd[0], cmd.slice(1), { stdio: ['pipe', 'pipe', 'inherit'] })
 	stdout.pipe(proc.stdin)
 	proc.stdout.pipe(stdin)
 	if (proc.exitCode) {
