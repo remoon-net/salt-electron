@@ -1,4 +1,4 @@
-import { registerPlugin } from '@capacitor/core'
+import { Capacitor, registerPlugin } from '@capacitor/core'
 import {
 	Preferences as PreferencesRaw,
 	type PreferencesPlugin as PreferencesPluginRaw,
@@ -6,9 +6,10 @@ import {
 
 type PreferencesPlugin = Pick<PreferencesPluginRaw, 'get' | 'set'>
 
-export const Preferences = registerPlugin<PreferencesPlugin>('xhe-preferences', {
-	web: PreferencesRaw,
-	android: PreferencesRaw,
-	ios: PreferencesRaw,
+const isElectron = Capacitor.getPlatform() === 'electron'
+
+const PreferencesElectron = registerPlugin<PreferencesPlugin>('xhe-preferences', {
 	electron: () => (window as any).CapacitorCustomPlatform.plugins.XhePreferences,
 })
+
+export const Preferences = isElectron ? PreferencesElectron : PreferencesRaw
