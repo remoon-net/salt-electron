@@ -15,7 +15,8 @@
 	},
 	"win": {
 		"target": "nsis",
-		"icon": "assets/appIcon.ico"
+		"icon": "assets/appIcon.ico",
+		"requestedExecutionLevel": "requireAdministrator"
 	},
 	"mac": {
 		"category": "your.app.category.type",
