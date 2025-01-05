@@ -132,6 +132,8 @@ export async function load() {
 	ipcMain.handle('xhe-plugin-get', (e, opts) => xhe.get(opts))
 	ipcMain.handle('xhe-plugin-set', (e, opts) => xhe.set(opts))
 
+	await xhe.get({ selector: 'status' })
+
 	return xhe
 }
 
