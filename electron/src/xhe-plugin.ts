@@ -21,11 +21,11 @@ import { readFile } from 'fs/promises'
 
 import { app, ipcMain } from 'electron'
 import { join } from 'path'
+import electronIsDev from 'electron-is-dev'
 
-const wasm: string = join(app.getAppPath(), './resources/salt-vpn-ipc.wasm')
-const bin: string = join(app.getAppPath(), './resources/salt-vpn.bin')
-
-console.log('binnnnnnnnnnnnnnn', bin)
+const fixedPath = electronIsDev ? '' : '../'
+const wasm: string = join(app.getAppPath(), fixedPath, './resources/salt-vpn-ipc.wasm')
+const bin: string = join(app.getAppPath(), fixedPath, './resources/salt-vpn.bin')
 
 export async function load() {
 	const stdin = new PassThrough()
