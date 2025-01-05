@@ -104,6 +104,18 @@ export class ElectronCapacitorApp {
 		return this.customScheme
 	}
 
+	public showMainWindow = () => {
+		if (!this.MainWindow) {
+			return
+		}
+		if (this.MainWindow.isVisible()) {
+			this.MainWindow.hide()
+		} else {
+			this.MainWindow.show()
+			this.MainWindow.focus()
+		}
+	}
+
 	async init(): Promise<void> {
 		const icon = nativeImage.createFromPath(
 			join(
@@ -152,26 +164,8 @@ export class ElectronCapacitorApp {
 		// When the tray icon is enabled, setup the options.
 		if (this.CapacitorFileConfig.electron?.trayIconAndMenuEnabled) {
 			this.TrayIcon = new Tray(icon)
-			this.TrayIcon.on('double-click', () => {
-				if (this.MainWindow) {
-					if (this.MainWindow.isVisible()) {
-						this.MainWindow.hide()
-					} else {
-						this.MainWindow.show()
-						this.MainWindow.focus()
-					}
-				}
-			})
-			this.TrayIcon.on('click', () => {
-				if (this.MainWindow) {
-					if (this.MainWindow.isVisible()) {
-						this.MainWindow.hide()
-					} else {
-						this.MainWindow.show()
-						this.MainWindow.focus()
-					}
-				}
-			})
+			this.TrayIcon.on('double-click', this.showMainWindow)
+			this.TrayIcon.on('click', this.showMainWindow)
 			this.TrayIcon.setToolTip(app.getName())
 			this.TrayIcon.setContextMenu(Menu.buildFromTemplate(this.TrayMenuTemplate))
 

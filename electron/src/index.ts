@@ -53,6 +53,11 @@ import { load as loadXhePlugin } from './xhe-plugin'
 
 // Run Application
 void (async () => {
+	if (!app.requestSingleInstanceLock()) {
+		app.quit() // 如果已有实例运行，则退出新启动的实例
+		return
+	}
+
 	await loadXhePlugin()
 	// Wait for electron app to be ready.
 	await app.whenReady()
@@ -63,6 +68,8 @@ void (async () => {
 	// Check for updates if we are in a packaged app.
 	autoUpdater.checkForUpdatesAndNotify()
 })()
+
+app.on('second-instance', myCapacitorApp.showMainWindow)
 
 // Handle when all of our windows are close (platforms have their own expectations).
 app.on('window-all-closed', function () {
