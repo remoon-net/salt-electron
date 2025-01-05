@@ -76,8 +76,18 @@
 					</div>
 					<div class="my-3">
 						<div class="form-label">WHIP</div>
-						<Select options={allWHIPs} bind:values={whips} expand disabled={pending.value}></Select>
-						<div class="form-text">对方节点通过这些信令服务器连接你</div>
+						{#if !allWHIPs.length}
+							<input
+								type="text"
+								class="form-control is-invalid"
+								value="无信令服务器可选"
+								readonly
+							/>
+							<div class="form-text">好友导入无信令服务器的节点链接将无法连接到你</div>
+						{:else}
+							<Select options={allWHIPs} bind:values={whips} expand disabled={pending.value} />
+							<div class="form-text">对方节点通过这些信令服务器连接你</div>
+						{/if}
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -89,15 +99,9 @@
 					>
 						关闭
 					</button>
-					{#if whips.length === 0}
-						<button type="submit" class="btn btn-primary" disabled={pending.value}>
-							未选择信令服务器, 无法生成节点链接
-						</button>
-					{:else}
-						<button type="submit" class="btn btn-primary" disabled={pending.value}>
-							生成节点链接
-						</button>
-					{/if}
+					<button type="submit" class="btn btn-primary" disabled={pending.value}>
+						生成节点链接
+					</button>
 				</div>
 			</div>
 		</div>
@@ -126,7 +130,15 @@
 			<div class="modal-footer">
 				<button
 					type="button"
-					class="btn btn-primary w-100"
+					class="btn btn-secondary"
+					data-bs-dismiss="modal"
+					disabled={pending.value}
+				>
+					关闭
+				</button>
+				<button
+					type="button"
+					class="btn btn-primary"
 					onclick={(e) => {
 						copyText(share_link)
 					}}

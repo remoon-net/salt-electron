@@ -37,7 +37,9 @@
 		</a>
 	</div>
 	<div>
-		<a href="/peer/import/" class="btn btn-outline-primary w-100">导入节点链接</a>
+		<a href="#linker-import" data-bs-toggle="modal" class="btn btn-outline-primary w-100">
+			导入节点链接
+		</a>
 	</div>
 </div>
 

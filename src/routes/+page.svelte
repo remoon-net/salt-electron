@@ -4,8 +4,10 @@
 	import Peer from './peer.svelte'
 	import Panel from './panel.svelte'
 	import Op from './op.svelte'
+	import ImportPeer from './import-peer.svelte'
 </script>
 
+<ImportPeer></ImportPeer>
 <div class="container">
 	<Panel status={data.status}></Panel>
 	<hr />
