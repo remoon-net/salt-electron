@@ -13,7 +13,13 @@ unhandled()
 
 // Define our menu templates (these are optional)
 const trayMenuTemplate: (MenuItemConstructorOptions | MenuItem)[] = [
-	new MenuItem({ label: 'Quit App', role: 'quit' }),
+	new MenuItem({
+		label: 'Quit App',
+		click: () => {
+			myCapacitorApp.wantQuit = true
+			app.quit()
+		},
+	}),
 ]
 const appMenuBarMenuTemplate: (MenuItemConstructorOptions | MenuItem)[] = [
 	{ role: process.platform === 'darwin' ? 'appMenu' : 'fileMenu' },
