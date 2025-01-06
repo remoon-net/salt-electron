@@ -237,8 +237,10 @@
 			{/each}
 			<div class="form-text">分配访问地址, 一般会自动生成不用修改</div>
 		</div>
-		<button type="submit" id="submit" class="btn btn-primary w-100" disabled={pending.value}>
-			保存
-		</button>
+		<div class="my-3">
+			<button type="submit" id="submit" class="btn btn-primary w-100" disabled={pending.value}>
+				保存
+			</button>
+		</div>
 	</form>
 </div>
