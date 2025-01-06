@@ -4,6 +4,7 @@
 	import { modal } from '@remoon.net/bootstrap'
 	import xhe from '$lib/xhe'
 	import { goto } from '$app/navigation'
+	import { Modal } from 'bootstrap'
 
 	const pending = withPending()
 	let devClass = ''
@@ -15,6 +16,7 @@
 	async function handleSubmit(form: FormData) {
 		await xhe.set('peer.share', 'decode', link)
 		let s = await xhe.get('peer.share.decoded')
+		Modal.getOrCreateInstance('#linker-import').hide()
 		// console.log(s)
 		await goto('/peer/add/?peer=share')
 	}
@@ -35,6 +37,9 @@
 		tabindex="-1"
 		use:modal
 		data-bs-backdrop="static"
+		onshow.bs.modal={() => {
+			link = ''
+		}}
 	>
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
