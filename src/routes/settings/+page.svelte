@@ -57,7 +57,6 @@
 					id="nickname"
 					class="form-control"
 					placeholder="昵称"
-					required
 					value={status.Name}
 					disabled={pending.value}
 				/>
