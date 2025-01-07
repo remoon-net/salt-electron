@@ -4,6 +4,16 @@
 	import Peer from './peer.svelte'
 	import Panel from './panel.svelte'
 	import Op from './op.svelte'
+	import { invalidate } from '$app/navigation'
+
+	$effect(() => {
+		document.addEventListener('visibilitychange', () => {
+			// 当页面切换回来后同步一次最新数据
+			if (document.visibilityState === 'visible') {
+				invalidate('app:status')
+			}
+		})
+	})
 </script>
 
 <div class="container">
