@@ -30,6 +30,8 @@ public class XhePlugin extends Plugin {
         var intent = VpnService.prepare(ctx);
         if( intent != null) {
             startActivityForResult(call,intent,VPN_REQUEST_CODE);
+            call.reject("VPN 权限请求中");
+            return;
         }
 
         var vpn = new Intent(ctx, VpnService.class);
