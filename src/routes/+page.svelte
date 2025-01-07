@@ -7,12 +7,16 @@
 	import { invalidate } from '$app/navigation'
 
 	$effect(() => {
-		document.addEventListener('visibilitychange', () => {
-			// 当页面切换回来后同步一次最新数据
+		// 当页面切换回来后同步一次最新数据
+		function syncStatus() {
 			if (document.visibilityState === 'visible') {
 				invalidate('app:status')
 			}
-		})
+		}
+		document.addEventListener('visibilitychange', syncStatus)
+		return () => {
+			document.removeEventListener('visibilitychange', syncStatus)
+		}
 	})
 </script>
 
