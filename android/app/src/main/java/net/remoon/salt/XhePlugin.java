@@ -42,9 +42,10 @@ public class XhePlugin extends Plugin {
 
     @PluginMethod()
     public void stop(PluginCall call) throws Exception {
-        var ctx = getContext();
-        var vpn = new Intent(ctx, VpnService.class);
-        ctx.stopService(vpn);
+//        var ctx = getContext();
+//        var vpn = new Intent(ctx, VpnService.class);
+//        ctx.stopService(vpn);
+        Libvpn.stop(Libvpn.TargetAll);
         call.resolve();
     }
 
