@@ -8,6 +8,7 @@
 
 	async function start() {
 		await xhe.start(Target.All)
+		await new Promise((rl) => setTimeout(rl, 5e2))
 		await invalidate('app:status')
 	}
 	async function stop() {
@@ -53,7 +54,17 @@
 		</div>
 	</div>
 	<div class="col col-auto text-end">
-		{#if status.Running}
+		{#if pending.value}
+			<button
+				class="btn btn-outline-primary"
+				aria-label="start"
+				type="button"
+				disabled={pending.value}
+			>
+				<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+				<span class="visually-hidden" role="status">Loading...</span>
+			</button>
+		{:else if status.Running}
 			<button
 				class="btn btn-outline-primary"
 				aria-label="start"
