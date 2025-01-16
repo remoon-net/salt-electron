@@ -5,7 +5,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
 	plugins: [sveltekit()],
 	server: {
-		host: 'salt.lo.remoon.net',
+		host: 'salt-vpn.lo.remoon.net',
 	},
 	resolve: {
 		alias: {
