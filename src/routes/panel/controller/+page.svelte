@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation'
 	import { withPending } from '$lib/pending.svelte'
-	import xhe from '$lib/xhe.js'
-	import { Select } from '@remoon.net/bootstrap'
-	import { copy, copyText } from 'svelte-copy'
+	import xhe, { sleep } from '$lib/xhe.js'
+	import { copyText } from 'svelte-copy'
 
 	const { data } = $props()
 	const status = $derived(data.status)
@@ -21,10 +20,12 @@
 	}
 	async function connectLink(link: string) {
 		await xhe.set('linker', 'connect', link)
+		await sleep()
 		await invalidate('app:status')
 	}
 	async function disconnectLink(link: string) {
 		await xhe.set('linker', 'disconnect', link)
+		await sleep()
 		await invalidate('app:status')
 	}
 

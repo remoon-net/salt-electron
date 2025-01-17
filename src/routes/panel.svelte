@@ -4,15 +4,16 @@
 	import { withPending } from '$lib/pending.svelte'
 
 	const { status }: { status: Status } = $props()
-	import xhe, { Target } from '$lib/xhe'
+	import xhe, { sleep, Target } from '$lib/xhe'
 
 	async function start() {
 		await xhe.start(Target.All)
-		await new Promise((rl) => setTimeout(rl, 5e2))
+		await sleep()
 		await invalidate('app:status')
 	}
 	async function stop() {
 		await xhe.stop(Target.All)
+		await sleep()
 		await invalidate('app:status')
 	}
 

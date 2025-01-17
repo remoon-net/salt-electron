@@ -1,6 +1,8 @@
 import { Capacitor, registerPlugin } from '@capacitor/core'
 import { Preferences } from './preferences'
 
+export const sleep = (d: number = 500) => new Promise((rl) => setTimeout(rl, d))
+
 export const enum Target {
 	None = 0b00,
 	Device = 0b10,
