@@ -224,7 +224,7 @@
 						</button>
 					</div>
 				{/each}
-				<div class="form-text">WHIP用于和好友建立连接</div>
+				<div class="form-text">WHIP用于和节点建立连接</div>
 			</div>
 			<div class="my-3">
 				<div class="row align-items-center mb-2">

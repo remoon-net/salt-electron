@@ -101,7 +101,7 @@
 				</div>
 			</div>
 			<Select options={opts} bind:values={tags} disabled={pending.value}></Select>
-			<div class="form-text">策略分组, 在好友连接策略中会使用到</div>
+			<div class="form-text">策略分组, 在节点连接策略中会使用到</div>
 		</div>
 		<div class="my-3">
 			<button type="submit" class="btn btn-primary w-100" disabled={pending.value}>

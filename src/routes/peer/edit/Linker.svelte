@@ -85,10 +85,13 @@
 								value="无信令服务器可选"
 								readonly
 							/>
-							<div class="form-text">好友导入无信令服务器的节点链接将无法连接到你</div>
 						{:else}
 							<Select options={allWHIPs} bind:values={whips} expand disabled={pending.value} />
-							<div class="form-text">对方节点通过这些信令服务器连接你</div>
+						{/if}
+						{#if whips.length === 0}
+							<div class="form-text">无信令地址的节点链接是无法主动连接本机节点的</div>
+						{:else}
+							<div class="form-text">对方节点通过这些信令服务器连接本机节点</div>
 						{/if}
 					</div>
 				</div>
@@ -127,7 +130,7 @@
 					readonly
 					rows="12"
 				></textarea>
-				<div class="form-text">内容已加密, 只有好友那边可解密</div>
+				<div class="form-text">内容已加密, 只有拥有此节点公钥的设备可解密</div>
 			</div>
 			<div class="modal-footer">
 				<button

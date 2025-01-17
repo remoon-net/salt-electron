@@ -94,7 +94,7 @@
 					disabled={pending.value}
 					onclick={() => {
 						pending.call(() => {
-							if (!confirm('警告! 重置私钥将会导致你与已有的好友失去连接')) {
+							if (!confirm('警告! 重置私钥将会导致你与已有的节点失去连接')) {
 								return
 							}
 							if (prompt('请输入 "reset key" 以确认进行私钥重置') !== 'reset key') {
@@ -140,7 +140,7 @@
 					<i class="bi bi-copy"></i>
 				</button>
 			</div>
-			<div class="form-text">复制公钥给好友以便生成邀请链接</div>
+			<div class="form-text">复制公钥给其它节点以便生成邀请链接</div>
 		</div>
 		<div class="my-3">
 			<div class="row align-items-center mb-2">

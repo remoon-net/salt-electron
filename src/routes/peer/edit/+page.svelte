@@ -96,7 +96,7 @@
 					aria-label="delete route"
 					onclick={() => {
 						pending.call(() => {
-							let confirmed = confirm('确认是否移除该好友?')
+							let confirmed = confirm('确认是否移除该节点?')
 							if (!confirmed) {
 								return
 							}
@@ -137,7 +137,7 @@
 					<i class="bi bi-arrow-clockwise"></i>
 				</button>
 			</div>
-			<div class="form-text">加强安全性以应对后量子时代, 和好友保持一致方可连接</div>
+			<div class="form-text">加强安全性以应对后量子时代, 保持一致方可连接</div>
 		</div>
 		<div class="my-3">
 			<label for="ice" class="form-label">连接策略</label>
@@ -145,7 +145,7 @@
 				<i class="bi bi-question-circle"></i>
 			</a>
 			<Select options={status.ICETags} bind:values={ices}></Select>
-			<div class="form-text">含有直连策略时将会暴露IP给好友</div>
+			<div class="form-text">含有直连策略时将会暴露IP给此节点</div>
 		</div>
 		<div class="my-3">
 			<div class="row align-items-center mb-2">
