@@ -50,6 +50,9 @@
 			return false
 		})
 	})
+
+	import { getFAQOpen } from '$lib/../routes/faq.svelte'
+	const openFAQ = getFAQOpen()
 </script>
 
 <div class="container">
@@ -67,6 +70,9 @@
 		>
 			<div class="my-3">
 				<label for="link" class="form-label">Linker</label>
+				<a href="/faq/#linker" aria-label="Linker 详解" onclick={openFAQ}>
+					<i class="bi bi-question-circle"></i>
+				</a>
 				<div class="input-group">
 					<input
 						type="url"
@@ -86,7 +92,7 @@
 						<i class="bi bi-plus-lg"></i>
 					</button>
 				</div>
-				<div class="form-text">粘贴</div>
+				<div class="form-text">粘贴从信令服务提供方那边获取的 Linker</div>
 			</div>
 		</form>
 		{#each status.Linker as linker}
@@ -176,7 +182,10 @@
 	<div class="my-3">
 		<div class="row mb-2 align-item-center">
 			<div class="col">
-				<div class="form-label mb-0">ICE</div>
+				<span class="form-label mb-0">ICE</span>
+				<a href="/faq/#ice-server" aria-label="Linker 详解" onclick={openFAQ}>
+					<i class="bi bi-question-circle"></i>
+				</a>
 			</div>
 			<div class="col col-auto">
 				<a href="/panel/ice-new/" class="btn btn-sm btn-outline-primary" aria-label="add ice">

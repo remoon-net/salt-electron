@@ -42,15 +42,3 @@ export interface PeerStatus extends Peer {
 	ReceiveBytes?: number
 	TransmitBytes?: number
 }
-
-import { Buffer } from 'buffer'
-
-export function hex2base64(s2: string) {
-	const buf = Buffer.from(s2, 'hex')
-	return buf.toString('base64')
-}
-
-export function base64Tohex(s2: string) {
-	const buf = Buffer.from(s2, 'base64')
-	return buf.toString('hex')
-}

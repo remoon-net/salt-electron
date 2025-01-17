@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation'
-	import { hex2base64, type LinkerStatus, type Status } from '$lib/config'
+	import { type LinkerStatus, type Status } from '$lib/config'
 	import { withPending } from '$lib/pending.svelte'
 
 	const { status }: { status: Status } = $props()

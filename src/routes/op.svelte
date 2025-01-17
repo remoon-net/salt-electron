@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { hex2base64 } from '$lib/config'
-	import { tooltip } from '@remoon.net/bootstrap'
+	import { tooltip, getSnackbarShow } from '@remoon.net/bootstrap'
 	import { copy } from 'svelte-copy'
 
 	const { pubkey }: { pubkey: string } = $props()
+	const showSnackbar = getSnackbarShow()
 </script>
 
 <div class="row g-2 align-items-center">
@@ -13,7 +13,11 @@
 			aria-label="copy self pubkey"
 			use:tooltip
 			title="点击复制公钥"
-			use:copy={hex2base64(pubkey)}
+			use:copy={{
+				text: pubkey,
+				onCopy: () => showSnackbar({ msg: '成功复制公钥' }),
+				onError: () => showSnackbar({ msg: '复制公钥失败' }),
+			}}
 		>
 			<i class="bi bi-copy"></i>
 			复制
@@ -21,7 +25,7 @@
 	</div>
 	<div class="col pubkey">
 		<a href="/settings/">
-			{hex2base64(pubkey)}
+			{pubkey}
 		</a>
 	</div>
 	<div class="col col-auto">

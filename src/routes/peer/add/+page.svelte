@@ -2,7 +2,7 @@
 	import { withPending } from '$lib/pending.svelte'
 	import { collapse, Select, tooltip } from '@remoon.net/bootstrap'
 	import xhe from '$lib/xhe.js'
-	import { base64Tohex, hex2base64, type Peer } from '$lib/config'
+	import { type Peer } from '$lib/config'
 	import { goto, invalidate } from '$app/navigation'
 
 	const { data } = $props()
@@ -20,7 +20,7 @@
 	async function add(form: FormData) {
 		let peer: Peer = {
 			Name: form.get('Name') as string,
-			Pubkey: base64Tohex(form.get('Pubkey') as string),
+			Pubkey: form.get('Pubkey') as string,
 			PSK: psk,
 			ICE: ices,
 			Auto: 0,
@@ -33,7 +33,7 @@
 			})
 			if (index != -1) {
 				let name = status.Peer[index].Name
-				if (!confirm(`有相同公钥的好友节点(${!!name ? name : '未命名'})存在, 是否进行替换?`)) {
+				if (!confirm(`有相同公钥的节点(${!!name ? name : '未命名'})存在, 是否进行替换?`)) {
 					return
 				}
 			}
@@ -46,6 +46,9 @@
 			await goto(`/peer/edit/?pubkey=${peer.Pubkey}#linker-gen`)
 		}
 	}
+
+	import { getFAQOpen } from '$lib/../routes/faq.svelte'
+	const openFAQ = getFAQOpen()
 </script>
 
 <div class="container">
@@ -60,6 +63,9 @@
 	>
 		<div class="my-3">
 			<label for="name" class="form-label">节点昵称</label>
+			<a href="/faq/#nickname" aria-label="昵称详解" onclick={openFAQ}>
+				<i class="bi bi-question-circle"></i>
+			</a>
 			<input
 				type="text"
 				name="Name"
@@ -73,6 +79,9 @@
 		</div>
 		<div class="my-3">
 			<label for="pubkey" class="form-label">公钥 *</label>
+			<a href="/faq/#peer-pubkey" aria-label="节点公钥详解" onclick={openFAQ}>
+				<i class="bi bi-question-circle"></i>
+			</a>
 			<input
 				type="text"
 				name="Pubkey"
@@ -80,7 +89,7 @@
 				class="form-control"
 				placeholder="公钥"
 				required
-				value={data.peer?.Pubkey ? hex2base64(data.peer?.Pubkey) : ''}
+				value={data.peer?.Pubkey ?? ''}
 				disabled={pending.value}
 			/>
 			<div class="form-text">节点公钥</div>
@@ -117,12 +126,15 @@
 		>
 			<div class="my-3">
 				<label for="psk" class="form-label">共享密钥</label>
+				<a href="/faq/#psk" aria-label="共享密钥详解" onclick={openFAQ}>
+					<i class="bi bi-question-circle"></i>
+				</a>
 				<div class="input-group">
 					<input
 						type="text"
 						name="PSK"
 						id="psk"
-						value={hex2base64(psk)}
+						value={psk}
 						class="form-control"
 						placeholder="共享密钥"
 						disabled={pending.value}
@@ -144,6 +156,9 @@
 			</div>
 			<div class="my-3">
 				<label for="ice" class="form-label">连接策略</label>
+				<a href="/faq/#ice-policy" aria-label="连接策略详解" onclick={openFAQ}>
+					<i class="bi bi-question-circle"></i>
+				</a>
 				<Select options={status.ICETags} bind:values={ices}></Select>
 				<div class="form-text">
 					无 direct 策略的话 ICE 中必须要有 STUN 服务器才可连接, 可避免暴露你的 IP
@@ -153,6 +168,9 @@
 				<div class="row align-items-center mb-2">
 					<div class="col">
 						<label for="whip-last" class="form-label mb-0">WHIP</label>
+						<a href="/faq/#whip" aria-label="WHIP详解" onclick={openFAQ}>
+							<i class="bi bi-question-circle"></i>
+						</a>
 					</div>
 					<div class="col col-auto">
 						<div class="input-group">
@@ -212,6 +230,9 @@
 				<div class="row align-items-center mb-2">
 					<div class="col">
 						<label for="allow-last" class="form-label mb-0">Allow</label>
+						<a href="/faq/#allow" aria-label="Allow详解" onclick={openFAQ}>
+							<i class="bi bi-question-circle"></i>
+						</a>
 					</div>
 					<div class="col col-auto">
 						<button
@@ -252,11 +273,11 @@
 						</button>
 					</div>
 				{/each}
-				<div class="form-text">好友可使用的IP</div>
+				<div class="form-text">该节点可使用的IP来源地址</div>
 			</div>
 		</div>
 		<div class="my-3">
-			<button type="submit" id="submit" class="btn btn-primary w-100"> 添加好友节点 </button>
+			<button type="submit" id="submit" class="btn btn-primary w-100"> 添加节点 </button>
 		</div>
 	</form>
 </div>

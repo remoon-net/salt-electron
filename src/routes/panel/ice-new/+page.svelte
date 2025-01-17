@@ -45,6 +45,9 @@
 		customTags.push(t)
 		tags.push(t)
 	}
+
+	import { getFAQOpen } from '$lib/../routes/faq.svelte'
+	const openFAQ = getFAQOpen()
 </script>
 
 <div class="container">
@@ -62,6 +65,9 @@
 		<input type="hidden" name="" />
 		<div class="my-3">
 			<label for="ICE" class="form-label">ICE Server</label>
+			<a href="/faq/#ice-server" aria-label="ICE Server详解" onclick={openFAQ}>
+				<i class="bi bi-question-circle"></i>
+			</a>
 			<textarea
 				name="ICE"
 				id="ice"
@@ -76,7 +82,10 @@
 		<div class="my-3">
 			<div class="row mb-2 align-item-center">
 				<div class="col">
-					<div class="form-label mb-0">Tags</div>
+					<span class="form-label mb-0">Tags</span>
+					<a href="/faq/#ice-tag" aria-label="ICE Tag详解" onclick={openFAQ}>
+						<i class="bi bi-question-circle"></i>
+					</a>
 				</div>
 				<div class="col col-auto">
 					<button

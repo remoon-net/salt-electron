@@ -5,6 +5,7 @@
 	import Panel from './panel.svelte'
 	import Op from './op.svelte'
 	import { invalidate } from '$app/navigation'
+	import LinkerImport from './linker-import.svelte'
 
 	$effect(() => {
 		// 当页面切换回来后同步一次最新数据
@@ -20,6 +21,7 @@
 	})
 </script>
 
+<LinkerImport></LinkerImport>
 <div class="container">
 	<Panel status={data.status}></Panel>
 	<hr />

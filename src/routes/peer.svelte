@@ -1,14 +1,20 @@
 <script lang="ts">
-	import { hex2base64, type Peer, type PeerStatus } from '$lib/config'
+	import { type Peer, type PeerStatus } from '$lib/config'
 	import { Address, Address4, Address6 } from '$lib/netip'
 	import { tooltip } from '@remoon.net/bootstrap'
+	import { page } from '$app/state'
 
 	const { peer }: { peer: PeerStatus } = $props()
+	function peerEditLink(pubkey: string) {
+		const u = new URL(`/peer/edit/`, page.url.href)
+		u.searchParams.set('pubkey', pubkey)
+		return u.toString()
+	}
 </script>
 
 <h4>
-	<a class="pubkey" href="/peer/edit/?pubkey={peer.Pubkey}">
-		{!!peer.Name ? peer.Name : hex2base64(peer.Pubkey)}
+	<a class="pubkey" href={peerEditLink(peer.Pubkey)}>
+		{!!peer.Name ? peer.Name : peer.Pubkey}
 	</a>
 </h4>
 {#each peer.Allow as allow}

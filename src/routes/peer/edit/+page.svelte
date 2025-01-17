@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { hex2base64, type Peer } from '$lib/config.js'
+	import { type Peer } from '$lib/config.js'
 	import { withPending } from '$lib/pending.svelte.js'
 	import xhe from '$lib/xhe.js'
 	import { SvelteSet } from 'svelte/reactivity'
@@ -43,6 +43,9 @@
 	}
 
 	import Linker from './Linker.svelte'
+
+	import { getFAQOpen } from '$lib/../routes/faq.svelte'
+	const openFAQ = getFAQOpen()
 </script>
 
 <Linker {status} {peer}></Linker>
@@ -57,7 +60,10 @@
 		}}
 	>
 		<div class="my-3">
-			<label for="name" class="form-label">节点昵称 *</label>
+			<label for="name" class="form-label">节点昵称</label>
+			<a href="/faq/#nickname" aria-label="昵称详解" onclick={openFAQ}>
+				<i class="bi bi-question-circle"></i>
+			</a>
 			<input
 				type="text"
 				name="Name"
@@ -71,6 +77,9 @@
 		</div>
 		<div class="my-3">
 			<label for="pubkey" class="form-label">公钥 *</label>
+			<a href="/faq/#peer-pubkey" aria-label="公钥详解" onclick={openFAQ}>
+				<i class="bi bi-question-circle"></i>
+			</a>
 			<div class="input-group">
 				<input
 					type="text"
@@ -78,7 +87,7 @@
 					id="pubkey"
 					class="form-control"
 					placeholder="公钥"
-					value={hex2base64(peer.Pubkey)}
+					value={peer.Pubkey}
 					disabled={pending.value}
 				/>
 				<button
@@ -104,6 +113,9 @@
 
 		<div class="my-3">
 			<label for="psk" class="form-label">共享密钥</label>
+			<a href="/faq/#psk" aria-label="共享密钥详解" onclick={openFAQ}>
+				<i class="bi bi-question-circle"></i>
+			</a>
 			<div class="input-group">
 				<input
 					type="text"
@@ -111,7 +123,7 @@
 					id="psk"
 					class="form-control"
 					placeholder="共享密钥"
-					value={hex2base64(psk)}
+					value={psk}
 					disabled={pending.value}
 				/>
 				<button
@@ -129,6 +141,9 @@
 		</div>
 		<div class="my-3">
 			<label for="ice" class="form-label">连接策略</label>
+			<a href="/faq/#ice-policy" aria-label="连接策略详解" onclick={openFAQ}>
+				<i class="bi bi-question-circle"></i>
+			</a>
 			<Select options={status.ICETags} bind:values={ices}></Select>
 			<div class="form-text">含有直连策略时将会暴露IP给好友</div>
 		</div>
@@ -136,6 +151,9 @@
 			<div class="row align-items-center mb-2">
 				<div class="col">
 					<label for="whip-last" class="form-label mb-0">WHIP</label>
+					<a href="/faq/#whip" aria-label="WHIP详解" onclick={openFAQ}>
+						<i class="bi bi-question-circle"></i>
+					</a>
 				</div>
 				<div class="col col-auto">
 					<div class="input-group">
@@ -194,7 +212,10 @@
 		<div class="my-3">
 			<div class="row align-items-center mb-2">
 				<div class="col">
-					<label for="allow-last" class="form-label mb-0">路由</label>
+					<label for="allow-last" class="form-label mb-0">Allow</label>
+					<a href="/faq/#allow" aria-label="Allow详解" onclick={openFAQ}>
+						<i class="bi bi-question-circle"></i>
+					</a>
 				</div>
 				<div class="col col-auto">
 					<button

@@ -15,7 +15,7 @@
 		devClass = 'd-block show'
 	}
 
-	import { Select, modal } from '@remoon.net/bootstrap'
+	import { Select, getSnackbarShow, modal } from '@remoon.net/bootstrap'
 	import { Modal } from 'bootstrap'
 	import { copyText } from 'svelte-copy'
 
@@ -36,6 +36,8 @@
 		Modal.getOrCreateInstance('#linker-gen').hide()
 		Modal.getOrCreateInstance('#linker-show').toggle()
 	}
+
+	const showSnackbar = getSnackbarShow()
 </script>
 
 <form
@@ -74,7 +76,7 @@
 						/>
 						<div class="form-text">在对方那边显示</div>
 					</div>
-					<div class="my-3">
+					<div class="my-3 share-whips">
 						<div class="form-label">WHIP</div>
 						{#if !allWHIPs.length}
 							<input
@@ -140,7 +142,9 @@
 					type="button"
 					class="btn btn-primary"
 					onclick={(e) => {
-						copyText(share_link)
+						copyText(share_link).then(() => {
+							showSnackbar({ msg: '成功复制节点链接' })
+						})
 					}}
 				>
 					点击复制节点链接
@@ -149,3 +153,10 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	.share-whips :global(.dropdown-item) {
+		word-break: break-all;
+		white-space: break-spaces;
+	}
+</style>

@@ -1,16 +1,7 @@
-<div class="row align-items-center">
-	<div class="col col-auto">
-		<a href="/" class="btn">
-			<i class="bi bi-house"></i>
-			主页
-		</a>
-	</div>
-	<div class="col text-center">此节点设置</div>
-	<div class="col col-auto">
-		<label for="submit" class="btn">
-			<i class="bi bi-floppy"></i>
-			保存
-		</label>
-	</div>
-</div>
+<script>
+	import TopNavbar from '$lib/TopNavbar.svelte'
+</script>
+
+<TopNavbar></TopNavbar>
+
 <slot></slot>

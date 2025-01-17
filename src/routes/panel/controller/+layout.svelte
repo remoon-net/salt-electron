@@ -2,30 +2,27 @@
 	import { invalidate } from '$app/navigation'
 	import { withPending } from '$lib/pending.svelte'
 	const pending = withPending()
+	import TopNavbar from '$lib/TopNavbar.svelte'
 </script>
 
-<div class="row align-items-center">
-	<div class="col col-auto">
-		<a href="/" class="btn">
-			<i class="bi bi-house"></i>
-			主页
-		</a>
-	</div>
-	<div class="col text-center">www</div>
-	<div class="col col-auto">
-		<button
-			type="button"
-			class="btn"
-			disabled={pending.value}
-			onclick={() => {
-				pending.call(() => {
-					return invalidate('app:status')
-				})
-			}}
-		>
+{#snippet right()}
+	<button
+		type="button"
+		class="btn loading"
+		disabled={pending.value}
+		onclick={() => {
+			pending.call(() => invalidate('app:status'), 500)
+		}}
+	>
+		{#if pending.value}
+			<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+		{:else}
 			<i class="bi bi-arrow-clockwise"></i>
-			刷新
-		</button>
-	</div>
-</div>
+		{/if}
+		刷新
+	</button>
+{/snippet}
+
+<TopNavbar {right}></TopNavbar>
+
 <slot></slot>
