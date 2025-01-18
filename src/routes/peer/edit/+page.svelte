@@ -239,7 +239,7 @@
 						id={i === allows.length - 1 ? 'allow-last' : ''}
 						class="form-control"
 						placeholder="路由"
-						value={a}
+						bind:value={allows[i]}
 						disabled={pending.value}
 						required
 					/>
