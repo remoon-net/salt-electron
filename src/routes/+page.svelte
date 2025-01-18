@@ -26,6 +26,15 @@
 	<Panel status={data.status}></Panel>
 	<hr />
 	<Op pubkey={status.Pubkey}></Op>
+	{#if !status.Peer.length}
+		<div class="text-center my-5 fs-5 text-secondary">
+			<p>空空如也</p>
+			<p>
+				使用上方的按钮<br />
+				添加一些节点吧
+			</p>
+		</div>
+	{/if}
 	<div class="mt-3">
 		{#each status.Peer as p}
 			<div class="item border my-2 px-3 py-2 rounded">
