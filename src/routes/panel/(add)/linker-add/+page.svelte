@@ -86,6 +86,7 @@
 				required
 				bind:value={linker}
 				readonly={isView}
+				rows="4"
 			></textarea>
 			<div class="form-text">粘贴从信令服务提供方那边获取的 Linker</div>
 		</div>
@@ -94,15 +95,15 @@
 			<a href="/faq/#whip" aria-label="WHIP详解" onclick={openFAQ}>
 				<i class="bi bi-question-circle"></i>
 			</a>
-			<input
-				type="url"
+			<textarea
 				name="WHIP"
 				id="whip"
 				class="form-control"
 				placeholder="http://...."
 				bind:value={whip}
 				readonly={isView}
-			/>
+				rows="3"
+			></textarea>
 			<div class="form-text">信令服务提供方提供的用于公开访问的信令地址</div>
 		</div>
 		<div class="my-3">
