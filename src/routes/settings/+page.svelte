@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto, invalidate } from '$app/navigation'
-	import { type Config } from '$lib/config.js'
+	import { errStr, type Config } from '$lib/config.js'
 	import { withPending } from '$lib/pending.svelte.js'
 	import xhe, { Target } from '$lib/xhe.js'
 	import { getSnackbarShow, tooltip } from '@remoon.net/bootstrap'
@@ -46,13 +46,20 @@
 		onsubmit={(e) => {
 			e.preventDefault()
 			var form = new FormData(e.currentTarget)
-			pending.call(() => {
-				return handleSubmit(form)
-			})
+			pending
+				.call(() => {
+					return handleSubmit(form)
+				})
+				.catch((err) => {
+					showSnackbar({
+						msg: `保存失败. 错误:${errStr(err)}`,
+						role: 'danger',
+					})
+				})
 		}}
 	>
 		<div class="my-3">
-			<label for="nickname" class="form-label">此节点昵称</label>
+			<label for="nickname" class="form-label">本机节点昵称</label>
 			<a href="/faq/#nickname" aria-label="昵称详解" onclick={openFAQ}>
 				<i class="bi bi-question-circle"></i>
 			</a>

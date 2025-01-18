@@ -64,7 +64,7 @@
 				</div>
 				<div class="modal-body py-2">
 					<div class="my-3">
-						<label for="linker-name" class="form-label">此节点昵称</label>
+						<label for="linker-name" class="form-label">本机节点昵称</label>
 						<input
 							type="text"
 							name="Name"
