@@ -53,7 +53,7 @@
 	</div>
 	<div class="col col-auto">
 		<a
-			href="/panel/ice-new/?index={index}"
+			href="/panel/ice-add/?index={index}"
 			type="button"
 			class="btn btn-sm btn-outline-primary"
 			aria-label="edit"

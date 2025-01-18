@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type Peer } from '$lib/config.js'
+	import { errStr, type Peer } from '$lib/config.js'
 	import { withPending } from '$lib/pending.svelte.js'
 	import xhe from '$lib/xhe.js'
 	import { SvelteSet } from 'svelte/reactivity'
@@ -12,7 +12,7 @@
 	let allows = $state(peer.Allow)
 	let whips = $state(peer.WHIP)
 	let ices = $state(peer.ICE)
-	import { Select, tooltip } from '@remoon.net/bootstrap'
+	import { getSnackbarShow, Select, tooltip } from '@remoon.net/bootstrap'
 	import { goto, invalidate } from '$app/navigation'
 
 	async function update(form: FormData) {
@@ -46,6 +46,7 @@
 
 	import { getFAQOpen } from '$lib/../routes/faq.svelte'
 	const openFAQ = getFAQOpen()
+	const showSnackbar = getSnackbarShow()
 </script>
 
 <Linker {status} {peer}></Linker>
@@ -54,9 +55,14 @@
 		onsubmit={(e) => {
 			e.preventDefault()
 			let form = new FormData(e.currentTarget)
-			pending.call(() => {
-				return update(form)
-			})
+			pending
+				.call(() => update(form))
+				.catch((err) => {
+					showSnackbar({
+						msg: `保存失败. 错误: ${errStr(err)}`,
+						role: 'danger',
+					})
+				})
 		}}
 	>
 		<div class="my-3">

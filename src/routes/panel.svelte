@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation'
-	import { type LinkerStatus, type Status } from '$lib/config'
+	import { errStr, type LinkerStatus, type Status } from '$lib/config'
 	import { withPending } from '$lib/pending.svelte'
 
 	const { status }: { status: Status } = $props()
 	import xhe, { sleep, Target } from '$lib/xhe'
+	import { getSnackbarShow } from '@remoon.net/bootstrap'
 
 	async function start() {
 		await xhe.start(Target.All)
@@ -33,6 +34,7 @@
 	}
 
 	const pending = withPending()
+	const showSnackbar = getSnackbarShow()
 </script>
 
 <div class="row align-items-center my-3">
@@ -80,7 +82,14 @@
 				class="btn btn-outline-primary"
 				aria-label="start"
 				type="button"
-				onclick={() => pending.call(start)}
+				onclick={() => {
+					pending.call(start).catch((err) => {
+						showSnackbar({
+							msg: `启动失败. 错误: ${errStr(err)}`,
+							role: 'danger',
+						})
+					})
+				}}
 				disabled={pending.value}
 			>
 				<i class="bi bi-play"></i>
@@ -101,5 +110,9 @@
 		border-radius: 100%;
 		width: 0.4rem;
 		height: 0.4rem;
+		margin-left: 0.1rem;
+	}
+	.linker:first-child {
+		margin-left: 0;
 	}
 </style>

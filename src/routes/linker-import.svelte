@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { dev } from '$app/environment'
 	import { withPending } from '$lib/pending.svelte'
-	import { modal } from '@remoon.net/bootstrap'
+	import { getSnackbarShow, modal } from '@remoon.net/bootstrap'
 	import xhe from '$lib/xhe'
 	import { goto } from '$app/navigation'
 	import { Modal } from 'bootstrap'
+	import { errStr } from '$lib/config'
 
 	const pending = withPending()
 	let devClass = ''
@@ -20,15 +21,23 @@
 		// console.log(s)
 		await goto('/peer/add/?peer=share')
 	}
+	const showSnackbar = getSnackbarShow()
 </script>
 
 <form
 	onsubmit={(e) => {
 		e.preventDefault()
 		const form = new FormData(e.currentTarget)
-		pending.call(() => {
-			return handleSubmit(form)
-		})
+		pending
+			.call(() => {
+				return handleSubmit(form)
+			})
+			.catch((err) => {
+				showSnackbar({
+					msg: `解析节点链接出错: ${errStr(err)}`,
+					role: 'danger',
+				})
+			})
 	}}
 >
 	<div

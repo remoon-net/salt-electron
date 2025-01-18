@@ -2,7 +2,7 @@
 	import { goto, invalidate } from '$app/navigation'
 	import { withPending } from '$lib/pending.svelte.js'
 	import xhe from '$lib/xhe.js'
-	import { Select } from '@remoon.net/bootstrap'
+	import { getSnackbarShow, Select } from '@remoon.net/bootstrap'
 
 	const { data } = $props()
 	const isUpdate = $derived(data.index !== null)
@@ -47,7 +47,11 @@
 	}
 
 	import { getFAQOpen } from '$lib/../routes/faq.svelte'
+	import { errStr } from '$lib/config.js'
 	const openFAQ = getFAQOpen()
+
+	const showSnackbar = getSnackbarShow()
+	let submitText = $derived(data.ice ? '保存' : '添加')
 </script>
 
 <div class="container">
@@ -55,16 +59,19 @@
 		onsubmit={(e) => {
 			e.preventDefault()
 			const form = new FormData(e.currentTarget)
-			pending.call(() => {
-				if (data.ice) {
-				}
-				return handleSubmit(form)
-			})
+			pending
+				.call(() => handleSubmit(form))
+				.catch((err) => {
+					showSnackbar({
+						msg: `${submitText}失败. 错误: ${errStr(err)}`,
+						role: 'danger',
+					})
+				})
 		}}
 	>
 		<input type="hidden" name="" />
 		<div class="my-3">
-			<label for="ICE" class="form-label">ICE Server</label>
+			<label for="ice" class="form-label">ICE Server</label>
 			<a href="/faq/#ice-server" aria-label="ICE Server详解" onclick={openFAQ}>
 				<i class="bi bi-question-circle"></i>
 			</a>
@@ -105,7 +112,7 @@
 		</div>
 		<div class="my-3">
 			<button type="submit" class="btn btn-primary w-100" disabled={pending.value}>
-				{data.ice ? '保存' : '新增'}
+				{submitText}
 			</button>
 		</div>
 	</form>
