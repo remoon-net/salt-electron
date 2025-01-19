@@ -22,14 +22,16 @@
 	}
 
 	async function connectLink(link: string) {
-		await xhe.set('linker', 'connect', link)
-		await sleep()
-		await invalidate('app:status')
+		return xhe.set('linker', 'connect', link).finally(async () => {
+			await sleep()
+			await invalidate('app:status')
+		})
 	}
 	async function disconnectLink(link: string) {
-		await xhe.set('linker', 'disconnect', link)
-		await sleep()
-		await invalidate('app:status')
+		return xhe.set('linker', 'disconnect', link).finally(async () => {
+			await sleep()
+			await invalidate('app:status')
+		})
 	}
 
 	import { getFAQOpen } from '$lib/../routes/faq.svelte'
@@ -69,24 +71,26 @@
 		{#each Linkers as linker}
 			{@const dl = displayLink(linker.Link)}
 			{@const vl = viewLink(linker.Link)}
+			{@const wrong = !!linker.Error}
 			<div class="col">
 				<div class="input-group mb-2">
-					<a href={vl} class="btn form-control btn-outline-primary" class:disabled={pending.value}
-						>{dl}</a
+					<a
+						href={vl}
+						class="btn form-control"
+						class:btn-outline-primary={!wrong}
+						class:btn-outline-danger={wrong}
+						class:disabled={pending.value}
 					>
+						{dl}
+					</a>
 					{#if linker.Running}
-						{@const wrong = !!linker.Error}
 						<button
 							type="button"
-							class="btn"
-							class:btn-outline-primary={!wrong}
-							class:btn-outline-danger={wrong}
+							class="btn btn-outline-primary"
 							aria-label="停止此链接"
 							disabled={pending.value}
 							onclick={() => {
-								pending.call(() => {
-									return disconnectLink(linker.Link)
-								})
+								pending.call(() => disconnectLink(linker.Link))
 							}}
 						>
 							<i class="bi bi-pause"></i>
