@@ -10,6 +10,7 @@
 	const { linkers: Linkers }: Props = $props()
 
 	const pending = withPending()
+	let target = $state('')
 
 	function displayLink(link: string) {
 		const u = new URL(link)
@@ -22,12 +23,14 @@
 	}
 
 	async function connectLink(link: string) {
+		target = link
 		return xhe.set('linker', 'connect', link).finally(async () => {
 			await sleep()
 			await invalidate('app:status')
 		})
 	}
 	async function disconnectLink(link: string) {
+		target = link
 		return xhe.set('linker', 'disconnect', link).finally(async () => {
 			await sleep()
 			await invalidate('app:status')
@@ -37,7 +40,7 @@
 	import { getFAQOpen } from '$lib/../routes/faq.svelte'
 	const openFAQ = getFAQOpen()
 
-	import { getSnackbarShow } from '@remoon.net/bootstrap'
+	import { getSnackbarShow, tooltip } from '@remoon.net/bootstrap'
 	import { errStr, type LinkerStatus } from '$lib/config'
 	const showSnackbar = getSnackbarShow()
 </script>
@@ -80,10 +83,21 @@
 						class:btn-outline-primary={!wrong}
 						class:btn-outline-danger={wrong}
 						class:disabled={pending.value}
+						use:tooltip={{ title: !!linker.Error ? linker.Error : 'no err' }}
 					>
 						{dl}
 					</a>
-					{#if linker.Running}
+					{#if pending.value && target == linker.Link}
+						<button
+							class="btn btn-outline-primary"
+							aria-label="start"
+							type="button"
+							disabled={pending.value}
+						>
+							<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+							<span class="visually-hidden" role="status">Loading...</span>
+						</button>
+					{:else if linker.Running}
 						<button
 							type="button"
 							class="btn btn-outline-primary"
