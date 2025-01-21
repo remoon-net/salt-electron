@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">salt</string>
-    <string name="title_activity_main">salt</string>
+    <string name="app_name">Salt VPN</string>
+    <string name="title_activity_main">Salt VPN</string>
     <string name="package_name">net.remoon.salt</string>
     <string name="custom_url_scheme">net.remoon.salt</string>
 </resources>
