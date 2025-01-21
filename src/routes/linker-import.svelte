@@ -17,8 +17,12 @@
 	async function handleSubmit(form: FormData) {
 		await xhe.set('peer.share', 'decode', link)
 		let s = await xhe.get('peer.share.decoded')
-		Modal.getOrCreateInstance('#linker-import').hide()
 		// console.log(s)
+		await new Promise<void>((rl) => {
+			let modal = document.getElementById('linker-import')!
+			modal.addEventListener('hidden.bs.modal', () => rl(), { once: true })
+			Modal.getOrCreateInstance(modal).hide()
+		})
 		await goto('/peer/add/?peer=share')
 	}
 	const showSnackbar = getSnackbarShow()
@@ -29,9 +33,7 @@
 		e.preventDefault()
 		const form = new FormData(e.currentTarget)
 		pending
-			.call(() => {
-				return handleSubmit(form)
-			})
+			.call(() => handleSubmit(form), 500)
 			.catch((err) => {
 				showSnackbar({
 					msg: `解析节点链接出错: ${errStr(err)}`,
@@ -63,7 +65,7 @@
 					></button>
 				</div>
 				<div class="modal-body">
-					<div class="my-3">
+					<div class="">
 						<label for="peer" class="form-label">节点链接</label>
 						<textarea
 							name="link"
@@ -88,7 +90,13 @@
 						关闭
 					</button>
 					<button type="submit" class="btn btn-primary" disabled={pending.value}>
-						导入节点链接
+						{#if pending.value}
+							<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+							<span class="visually-hidden" role="status">Loading...</span>
+							导入中
+						{:else}
+							导入节点链接
+						{/if}
 					</button>
 				</div>
 			</div>
