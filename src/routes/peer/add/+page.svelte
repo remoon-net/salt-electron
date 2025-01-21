@@ -6,7 +6,7 @@
 	import { goto, invalidate } from '$app/navigation'
 
 	const { data } = $props()
-	const status = data.status
+	const status = $derived(data.status)
 	const allows = $state(data.ips)
 
 	const pending = withPending(false)
@@ -49,6 +49,7 @@
 
 	import { getFAQOpen } from '$lib/../routes/faq.svelte'
 	const openFAQ = getFAQOpen()
+	let fromShare = $derived(!!data.peer)
 </script>
 
 <div class="container">
@@ -138,7 +139,7 @@
 						class="form-control"
 						placeholder="共享密钥"
 						disabled={pending.value}
-						readonly={!!data.peer}
+						readonly={fromShare}
 					/>
 					<button
 						class="btn btn-outline-secondary"
@@ -147,12 +148,16 @@
 						title="点击随机生成共享密钥"
 						use:tooltip
 						onclick={genpsk}
-						disabled={!!data.peer}
+						disabled={fromShare}
 					>
 						<i class="bi bi-arrow-clockwise"></i>
 					</button>
 				</div>
-				<div class="form-text">填写有助于对抗后量子时代, 写不写都行</div>
+				{#if fromShare}
+					<div class="form-text">共享密钥来自于节点链接, 导入时不可修改,</div>
+				{:else}
+					<div class="form-text">填写有助于对抗后量子时代, 写不写都行</div>
+				{/if}
 			</div>
 			<div class="my-3">
 				<label for="ice" class="form-label">连接策略</label>
