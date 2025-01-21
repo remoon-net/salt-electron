@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { type Peer, type PeerStatus } from '$lib/config'
 	import { Address, Address4, Address6 } from '$lib/netip'
-	import { tooltip } from '@remoon.net/bootstrap'
+	import { getSnackbarShow, tooltip } from '@remoon.net/bootstrap'
 	import { page } from '$app/state'
+	import { copy } from 'svelte-copy'
 
 	const { peer }: { peer: PeerStatus } = $props()
 	function peerEditLink(pubkey: string) {
@@ -10,6 +11,7 @@
 		u.searchParams.set('pubkey', pubkey)
 		return u.toString()
 	}
+	const showSnackbar = getSnackbarShow()
 </script>
 
 <h4>
@@ -19,6 +21,7 @@
 </h4>
 {#each peer.Allow as allow}
 	{@const addr = Address(allow)}
+	{@const addrText = addr?.addressMinusSuffix ?? 'no address'}
 	<div class="ip">
 		<span class="badge text-bg-primary">
 			{#if addr instanceof Address4}
@@ -29,8 +32,15 @@
 				unkown
 			{/if}
 		</span>
-		<button class="btn btn-sm fs-6" use:tooltip={{ title: '点击复制' }}>
-			{addr?.addressMinusSuffix ?? 'no address'}
+		<button
+			class="btn btn-sm fs-6"
+			use:tooltip={{ title: '点击复制' }}
+			use:copy={{
+				text: addrText,
+				onCopy: () => showSnackbar({ msg: `IP地址复制成功.\n${addrText}` }),
+			}}
+		>
+			{addrText}
 		</button>
 	</div>
 {/each}
