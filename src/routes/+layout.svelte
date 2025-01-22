@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.scss'
 	import 'bootstrap'
-	import { Snackbar } from '@remoon.net/bootstrap'
+	import { App } from '@remoon.net/bootstrap'
 	import FAQ from './faq.svelte'
 
 	import { page } from '$app/state'
@@ -14,7 +14,7 @@
 	</title>
 </svelte:head>
 
-<Snackbar>
+<App>
 	{#if !page.url.pathname.startsWith('/faq')}
 		<FAQ>
 			<slot></slot>
@@ -22,4 +22,4 @@
 	{:else}
 		<slot></slot>
 	{/if}
-</Snackbar>
+</App>

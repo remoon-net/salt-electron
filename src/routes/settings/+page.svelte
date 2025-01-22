@@ -39,6 +39,11 @@
 	const showSnackbar = getSnackbarShow()
 	import { getFAQOpen } from '$lib/../routes/faq.svelte'
 	const openFAQ = getFAQOpen()
+
+	import { getAlert, getPrompt, getConfirm } from '@remoon.net/bootstrap'
+	const alert = getAlert()
+	const confirm = getConfirm()
+	const prompt = getPrompt()
 </script>
 
 <div class="container my-4">
@@ -100,12 +105,12 @@
 					use:tooltip
 					disabled={pending.value}
 					onclick={() => {
-						pending.call(() => {
-							if (!confirm('警告! 重置私钥将会导致你与已有的节点失去连接')) {
+						pending.call(async () => {
+							if (!(await confirm('警告! 重置私钥将会导致你与已有的节点失去连接'))) {
 								return
 							}
-							if (prompt('请输入 "reset key" 以确认进行私钥重置') !== 'reset key') {
-								alert('不为 "reset key", 请重试')
+							if ((await prompt('请输入 "reset key" 以确认进行私钥重置')) !== 'reset key') {
+								await alert('不为 "reset key", 请重试')
 								return
 							}
 							return genkey()

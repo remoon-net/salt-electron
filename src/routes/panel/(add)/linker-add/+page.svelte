@@ -2,7 +2,8 @@
 	import { goto, invalidate } from '$app/navigation'
 	import { withPending } from '$lib/pending.svelte.js'
 	import xhe from '$lib/xhe.js'
-	import { getSnackbarShow, Select } from '@remoon.net/bootstrap'
+	import { getSnackbarShow, Select, getAlert, getConfirm } from '@remoon.net/bootstrap'
+	const confirm = getConfirm()
 
 	const { data } = $props()
 	const isView = $derived(!!data.linker)
@@ -36,7 +37,7 @@
 	const pending = withPending()
 	async function handleSubmit(form: FormData) {
 		if (isView) {
-			if (!confirm('是否确认删除此 Linker')) {
+			if (!(await confirm('是否确认删除此 Linker'))) {
 				return
 			}
 			await xhe.set('linker', 'remove', data.linker!)

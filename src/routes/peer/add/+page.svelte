@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { withPending } from '$lib/pending.svelte'
-	import { collapse, Select, tooltip } from '@remoon.net/bootstrap'
+	import { collapse, getConfirm, Select, tooltip } from '@remoon.net/bootstrap'
 	import xhe from '$lib/xhe.js'
 	import { type Peer } from '$lib/config'
 	import { goto, invalidate } from '$app/navigation'
@@ -33,7 +33,7 @@
 			})
 			if (index != -1) {
 				let name = status.Peer[index].Name
-				if (!confirm(`有相同公钥的节点(${!!name ? name : '未命名'})存在, 是否进行替换?`)) {
+				if (!(await confirm(`有相同公钥的节点(${!!name ? name : '未命名'})存在, 是否进行替换?`))) {
 					return
 				}
 			}
@@ -46,6 +46,8 @@
 			await goto(`/peer/edit/?pubkey=${peer.Pubkey}#linker-gen`)
 		}
 	}
+
+	const confirm = getConfirm()
 
 	import { getFAQOpen } from '$lib/../routes/faq.svelte'
 	const openFAQ = getFAQOpen()

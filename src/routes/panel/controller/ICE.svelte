@@ -2,7 +2,7 @@
 	import { invalidate } from '$app/navigation'
 	import { withPending } from '$lib/pending.svelte'
 	import xhe from '$lib/xhe'
-	import { Select } from '@remoon.net/bootstrap'
+	import { getConfirm, Select } from '@remoon.net/bootstrap'
 
 	const { ice, allTags, index }: { ice: string; allTags: string[]; index: number } = $props()
 
@@ -17,6 +17,7 @@
 		await xhe.set('ice', 'remove', ice)
 		invalidate('app:status')
 	}
+	const confirm = getConfirm()
 </script>
 
 <textarea class="form-control" {value} rows="2" name="" id="" readonly></textarea>
@@ -28,10 +29,10 @@
 			aria-label="delete"
 			onclick={(e) => {
 				e.preventDefault()
-				if (!confirm('确认是否删除此 ICE Server')) {
-					return
-				}
-				pending.call(() => {
+				pending.call(async () => {
+					if (!(await confirm('确认是否删除此 ICE Server'))) {
+						return
+					}
 					return remove()
 				})
 			}}

@@ -12,7 +12,7 @@
 	let allows = $state(peer.Allow)
 	let whips = $state(peer.WHIP)
 	let ices = $state(peer.ICE)
-	import { getSnackbarShow, Select, tooltip } from '@remoon.net/bootstrap'
+	import { getSnackbarShow, Select, tooltip, getConfirm } from '@remoon.net/bootstrap'
 	import { goto, invalidate } from '$app/navigation'
 
 	async function update(form: FormData) {
@@ -47,6 +47,7 @@
 	import { getFAQOpen } from '$lib/../routes/faq.svelte'
 	const openFAQ = getFAQOpen()
 	const showSnackbar = getSnackbarShow()
+	const confirm = getConfirm()
 </script>
 
 <Linker {status} {peer}></Linker>
@@ -101,8 +102,8 @@
 					class="btn btn-outline-danger"
 					aria-label="delete route"
 					onclick={() => {
-						pending.call(() => {
-							let confirmed = confirm('确认是否移除该节点?')
+						pending.call(async () => {
+							let confirmed = await confirm('确认是否移除该节点?')
 							if (!confirmed) {
 								return
 							}
