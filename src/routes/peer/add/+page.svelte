@@ -166,7 +166,7 @@
 				<a href="/faq/#ice-policy" aria-label="连接策略详解" onclick={openFAQ}>
 					<i class="bi bi-question-circle"></i>
 				</a>
-				<Select options={status.ICETags} bind:values={ices}></Select>
+				<Select options={status.ICETags} bind:values={ices} disabled={pending.value}></Select>
 				<div class="form-text">
 					无 direct 策略的话 ICE 中必须要有 STUN 服务器才可连接, 可避免暴露你的 IP
 				</div>
