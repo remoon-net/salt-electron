@@ -9,13 +9,9 @@
 
 	async function start() {
 		await xhe.start(Target.All)
-		await sleep()
-		await invalidate('app:status')
 	}
 	async function stop() {
 		await xhe.stop(Target.All)
-		await sleep()
-		await invalidate('app:status')
 	}
 
 	import { DisplayStatus } from './panel.util'
@@ -60,7 +56,7 @@
 		{#if pending.value}
 			<button
 				class="btn btn-outline-primary"
-				aria-label="start"
+				aria-label="pending"
 				type="button"
 				disabled={pending.value}
 			>
@@ -72,7 +68,11 @@
 				class="btn btn-outline-primary"
 				aria-label="start"
 				type="button"
-				onclick={() => pending.call(stop)}
+				onclick={() => {
+					pending.call(stop, 500).finally(async () => {
+						await invalidate('app:status')
+					})
+				}}
 				disabled={pending.value}
 			>
 				<i class="bi bi-pause"></i>
@@ -80,15 +80,20 @@
 		{:else}
 			<button
 				class="btn btn-outline-primary"
-				aria-label="start"
+				aria-label="stop"
 				type="button"
 				onclick={() => {
-					pending.call(start).catch((err) => {
-						showSnackbar({
-							msg: `启动失败. 错误: ${errStr(err)}`,
-							role: 'danger',
+					pending
+						.call(start, 500)
+						.finally(async () => {
+							await invalidate('app:status')
 						})
-					})
+						.catch((err) => {
+							showSnackbar({
+								msg: `启动中出现了一些错误: ${errStr(err)}`,
+								role: 'danger',
+							})
+						})
 				}}
 				disabled={pending.value}
 			>
