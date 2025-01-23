@@ -6,6 +6,8 @@
 	import { invalidate } from '$app/navigation'
 	import LinkerImport from './linker-import.svelte'
 	import { sleep } from '$lib/xhe'
+	import { dev as rawDev } from '$app/environment'
+	let dev = rawDev
 
 	$effect(() => {
 		// 当页面切换回来后同步一次最新数据
@@ -21,6 +23,9 @@
 	})
 
 	$effect(() => {
+		if (dev) {
+			return
+		}
 		// 页面可见时每秒刷新一次数据
 		let cont = false
 		async function loop() {
@@ -62,6 +67,17 @@
 				使用上方的按钮<br />
 				添加一些节点吧
 			</p>
+		</div>
+	{/if}
+	{#if dev}
+		<div class="my-2">
+			<button
+				type="button"
+				class="btn btn-outline-primary w-100"
+				onclick={(e) => invalidate('app:status')}
+			>
+				刷新
+			</button>
 		</div>
 	{/if}
 	<div class="mt-3">
