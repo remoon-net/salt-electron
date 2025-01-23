@@ -13,7 +13,7 @@
 	}
 	const showSnackbar = getSnackbarShow()
 	import pp from 'pretty-bytes'
-	$inspect(peer)
+	import { DateTime } from 'luxon'
 </script>
 
 <h4 class="mb-0">
@@ -31,10 +31,15 @@
 			{:else if peer.Endpoint === '127.0.0.1:3'}
 				<small>连接中</small>
 			{:else}
+				{@const beforeNow = DateTime.fromISO(peer.LastHandshakeTime!).toRelative({
+					style: 'short',
+					unit: 'seconds',
+				})}
 				<small>{peer.Endpoint}</small>
+				<small class="last-handshake-time" title="上次握手时间" use:tooltip>({beforeNow})</small>
 			{/if}
 		</div>
-		<div class="col col-auto tx">
+		<div class="col col-auto">
 			<small>
 				<i class="bi bi-arrow-up"></i>
 				{pp(peer.TransmitBytes!)}
@@ -73,6 +78,13 @@
 	</div>
 {/each}
 <div class="row row-cols-auto g-1">
+	{#if !!peer.Auto}
+		<div class="col">
+			<span class="badge text-bg-primary">
+				Auto
+			</span>
+		</div>
+	{/if}
 	{#each peer.ICE as ice}
 		<div class="col">
 			<span class="badge text-bg-secondary">
@@ -89,5 +101,8 @@
 	.pubkey {
 		word-break: break-all;
 		display: block;
+	}
+	.last-handshake-time {
+		white-space: nowrap;
 	}
 </style>
