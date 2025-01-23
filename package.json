@@ -15,10 +15,10 @@
 	"devDependencies": {
 		"@capacitor/cli": "^6.2.0",
 		"@capacitor/preferences": "^6.0.3",
-		"@remoon.net/bootstrap": "link:/home/shynome/work/remoon.net/bootstrap",
+		"@remoon.net/bootstrap": "link:../bootstrap",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-static": "^3.0.6",
-		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/kit": "^2.16.1",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"@types/bootstrap": "^5.2.10",
 		"@types/golang-wasm-exec": "^1.15.2",
