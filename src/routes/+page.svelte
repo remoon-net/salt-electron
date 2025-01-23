@@ -5,6 +5,7 @@
 	import Op from './op.svelte'
 	import { invalidate } from '$app/navigation'
 	import LinkerImport from './linker-import.svelte'
+	import { sleep } from '$lib/xhe'
 
 	$effect(() => {
 		// 当页面切换回来后同步一次最新数据
@@ -16,6 +17,35 @@
 		document.addEventListener('visibilitychange', syncStatus)
 		return () => {
 			document.removeEventListener('visibilitychange', syncStatus)
+		}
+	})
+
+	$effect(() => {
+		// 页面可见时每秒刷新一次数据
+		let cont = false
+		async function loop() {
+			cont = true
+			while (cont) {
+				await sleep(1e3)
+				await invalidate('app:status')
+			}
+		}
+		let p = loop()
+		async function startLoop() {
+			switch (document.visibilityState) {
+				case 'visible':
+					await p // 等待上一个循环结束再开启新循环避免两个计时器重复刷新
+					p = loop()
+					break
+				case 'hidden':
+					cont = false
+					break
+			}
+		}
+		document.addEventListener('visibilitychange', startLoop)
+		return () => {
+			cont = false
+			document.removeEventListener('visibilitychange', startLoop)
 		}
 	})
 </script>

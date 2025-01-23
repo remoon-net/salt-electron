@@ -45,21 +45,7 @@
 		</a>
 	</div>
 	<div class="input-group">
-		<button
-			class="btn btn-outline-primary col-4"
-			disabled={pending.value}
-			onclick={() => {
-				pending.call(() => invalidate('app:status'), 500)
-			}}
-		>
-			{#if pending.value}
-				<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-			{:else}
-				<i class="bi bi-arrow-clockwise"></i>
-			{/if}
-			刷新
-		</button>
-		<a href="#linker-import" data-bs-toggle="modal" class="btn btn-outline-primary col-8">
+		<a href="#linker-import" data-bs-toggle="modal" class="btn btn-outline-primary w-100">
 			导入节点链接
 		</a>
 	</div>
