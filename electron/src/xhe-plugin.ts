@@ -80,6 +80,7 @@ export async function load() {
 		app.exit(code)
 	})
 
+	let initialized = false
 	const xhe: XhePluginNative = {
 		async start(opts) {
 			const u = new URL('http://salt-vpn/start')
@@ -104,6 +105,11 @@ export async function load() {
 			}
 		},
 		async set(opts) {
+			let initConfig = opts.selector === 'settings' && opts.action === 'init'
+			if (initConfig && initialized) {
+				// 避免重复初始化导致出错
+				return
+			}
 			const u = new URL('http://salt-vpn/set')
 			u.searchParams.set('selector', opts.selector)
 			u.searchParams.set('action', opts.action)
@@ -113,6 +119,9 @@ export async function load() {
 				const body = await resp.json()
 				console.log(body)
 				throw new Error(body.message)
+			}
+			if (initConfig) {
+				initialized = true
 			}
 		},
 		async get(opts) {

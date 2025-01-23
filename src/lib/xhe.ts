@@ -57,7 +57,7 @@ export async function load() {
 	}
 	return Xhe.set({
 		selector: 'settings',
-		action: '',
+		action: 'init',
 		value: value,
 	})
 }
