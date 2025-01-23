@@ -76,6 +76,9 @@ export async function load() {
 	if (proc.exitCode) {
 		throw new Error(`proc exited. code: ${proc.exitCode}`)
 	}
+	proc.on('exit', (code) => {
+		app.exit(code)
+	})
 
 	const xhe: XhePluginNative = {
 		async start(opts) {
