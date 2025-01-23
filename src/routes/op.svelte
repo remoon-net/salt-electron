@@ -1,9 +1,13 @@
 <script lang="ts">
+	import { invalidate } from '$app/navigation'
+	import { withPending } from '$lib/pending.svelte'
 	import { tooltip, getSnackbarShow } from '@remoon.net/bootstrap'
 	import { copy } from 'svelte-copy'
 
 	const { pubkey }: { pubkey: string } = $props()
 	const showSnackbar = getSnackbarShow()
+
+	const pending = withPending()
 </script>
 
 <div class="row g-2 align-items-center">
@@ -40,8 +44,22 @@
 			<i class="bi bi-plus-lg"></i>
 		</a>
 	</div>
-	<div>
-		<a href="#linker-import" data-bs-toggle="modal" class="btn btn-outline-primary w-100">
+	<div class="input-group">
+		<button
+			class="btn btn-outline-primary col-4"
+			disabled={pending.value}
+			onclick={() => {
+				pending.call(() => invalidate('app:status'), 500)
+			}}
+		>
+			{#if pending.value}
+				<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+			{:else}
+				<i class="bi bi-arrow-clockwise"></i>
+			{/if}
+			刷新
+		</button>
+		<a href="#linker-import" data-bs-toggle="modal" class="btn btn-outline-primary col-8">
 			导入节点链接
 		</a>
 	</div>

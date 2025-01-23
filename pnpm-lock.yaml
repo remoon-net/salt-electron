@@ -25,8 +25,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3(@capacitor/core@6.2.0)
       '@remoon.net/bootstrap':
-        specifier: ^0.1.0
-        version: 0.1.0(bootstrap@5.3.3(@popperjs/core@2.11.8))(svelte@5.2.7)
+        specifier: link:../bootstrap
+        version: link:../bootstrap
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
         version: 3.3.1(@sveltejs/kit@2.16.1(@sveltejs/vite-plugin-svelte@4.0.1(svelte@5.2.7)(vite@5.4.11(@types/node@22.10.3)(sass-embedded@1.81.0)))(svelte@5.2.7)(vite@5.4.11(@types/node@22.10.3)(sass-embedded@1.81.0)))
@@ -75,6 +75,9 @@ importers:
       prettier-plugin-svelte:
         specifier: ^3.2.6
         version: 3.3.2(prettier@3.3.3)(svelte@5.2.7)
+      pretty-bytes:
+        specifier: ^6.1.1
+        version: 6.1.1
       sass-embedded:
         specifier: ^1.81.0
         version: 1.81.0
@@ -322,12 +325,6 @@ packages:
 
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
-
-  '@remoon.net/bootstrap@0.1.0':
-    resolution: {integrity: sha512-ZV+3+V4iQfkEyw66ogyP8n+ocC4Qoefo50MXDB2cuUs2muoCfl9R0hb6ssJfTlOafLfjeKTsfvTpUax6iTedAA==}
-    peerDependencies:
-      bootstrap: ^5.3.0
-      svelte: ^5.0.0
 
   '@rollup/rollup-android-arm-eabi@4.27.4':
     resolution: {integrity: sha512-2Y3JT6f5MrQkICUyRVCw4oa0sutfAsgaSsb0Lmmy1Wi2y7X5vT9Euqw4gOsCyy0YfKURBg35nhUKZS4mDcfULw==}
@@ -892,6 +889,10 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
+  pretty-bytes@6.1.1:
+    resolution: {integrity: sha512-mQUvGU6aUFQ+rNvTIAcZuWGRT9a6f6Yrg9bHs4ImKF+HZCEK+plBvnAZYSIQztknZF2qnzNtr6F8s0+IuptdlQ==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+
   prompts@2.4.2:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
@@ -1177,10 +1178,6 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
-
-  uuid@11.0.5:
-    resolution: {integrity: sha512-508e6IcKLrhxKdBbcA2b4KQZlLVp2+J5UwQ6F7Drckkc5N9ZJwFa4TgWtsww9UG8fGHbm6gbV19TdM5pQ4GaIA==}
-    hasBin: true
 
   varint@6.0.0:
     resolution: {integrity: sha512-cXEIW6cfr15lFv563k4GuVuW/fiwjknytD37jIOLSdSWuOI6WnO/oKwmP2FQTU2l01LP8/M5TSAJpzUaGe3uWg==}
@@ -1488,12 +1485,6 @@ snapshots:
   '@polka/url@1.0.0-next.28': {}
 
   '@popperjs/core@2.11.8': {}
-
-  '@remoon.net/bootstrap@0.1.0(bootstrap@5.3.3(@popperjs/core@2.11.8))(svelte@5.2.7)':
-    dependencies:
-      bootstrap: 5.3.3(@popperjs/core@2.11.8)
-      svelte: 5.2.7
-      uuid: 11.0.5
 
   '@rollup/rollup-android-arm-eabi@4.27.4':
     optional: true
@@ -2001,6 +1992,8 @@ snapshots:
 
   prettier@3.3.3: {}
 
+  pretty-bytes@6.1.1: {}
+
   prompts@2.4.2:
     dependencies:
       kleur: 3.0.3
@@ -2271,8 +2264,6 @@ snapshots:
   untildify@4.0.0: {}
 
   util-deprecate@1.0.2: {}
-
-  uuid@11.0.5: {}
 
   varint@6.0.0: {}
 

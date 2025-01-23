@@ -1,6 +1,5 @@
 <script lang="ts">
 	const { data } = $props()
-	let status = $derived(data.status)
 	import Peer from './peer.svelte'
 	import Panel from './panel.svelte'
 	import Op from './op.svelte'
@@ -25,8 +24,8 @@
 <div class="container">
 	<Panel status={data.status}></Panel>
 	<hr />
-	<Op pubkey={status.Pubkey}></Op>
-	{#if !status.Peer.length}
+	<Op pubkey={data.status.Pubkey}></Op>
+	{#if !data.status.Peer.length}
 		<div class="text-center my-5 fs-5 text-secondary">
 			<p>空空如也</p>
 			<p>
@@ -36,7 +35,7 @@
 		</div>
 	{/if}
 	<div class="mt-3">
-		{#each status.Peer as p}
+		{#each data.status.Peer as p}
 			<div class="item border my-2 px-3 py-2 rounded">
 				<Peer peer={p}></Peer>
 			</div>

@@ -12,13 +12,41 @@
 		return u.toString()
 	}
 	const showSnackbar = getSnackbarShow()
+	import pp from 'pretty-bytes'
+	$inspect(peer)
 </script>
 
-<h4>
+<h4 class="mb-0">
 	<a class="pubkey" href={peerEditLink(peer.Pubkey)}>
 		{!!peer.Name ? peer.Name : peer.Pubkey}
 	</a>
 </h4>
+{#if !!peer.Endpoint}
+	<div class="row g-0">
+		<div class="col">
+			{#if peer.Endpoint === '127.0.0.1:1'}
+				<small>未连接</small>
+			{:else if peer.Endpoint === '127.0.0.1:2'}
+				<small>连接中</small>
+			{:else if peer.Endpoint === '127.0.0.1:3'}
+				<small>连接中</small>
+			{:else}
+				<small>{peer.Endpoint}</small>
+			{/if}
+		</div>
+		<div class="col col-auto tx">
+			<small>
+				<i class="bi bi-arrow-up"></i>
+				{pp(peer.TransmitBytes!)}
+			</small>
+			<small>
+				<i class="bi bi-arrow-down"></i>
+				{pp(peer.ReceiveBytes!)}
+			</small>
+		</div>
+	</div>
+{/if}
+<div class="mt-1"></div>
 {#each peer.Allow as allow}
 	{@const addr = Address(allow)}
 	{@const addrText = addr?.addressMinusSuffix ?? 'no address'}
