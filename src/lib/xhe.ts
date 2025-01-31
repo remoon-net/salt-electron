@@ -24,7 +24,7 @@ export interface XhePlugin {
 	get(selector: string): Promise<string>
 }
 
-import { browser } from '$app/environment'
+import { browser, dev } from '$app/environment'
 
 const platform = Capacitor.getPlatform()
 const Xhe = registerPlugin<XhePluginNative>('Xhe', {
@@ -54,6 +54,13 @@ export async function load() {
 	if (!value) {
 		await save()
 		return
+	}
+	if (dev) {
+		await Xhe.set({
+			selector: 'log_level',
+			action: '',
+			value: 'DEBUG',
+		})
 	}
 	return Xhe.set({
 		selector: 'settings',
