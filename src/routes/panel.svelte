@@ -39,6 +39,9 @@
 			<a href="/panel/controller/">
 				{status.Tun}
 			</a>
+			{#if status.VTun}
+				<small class="vtun">(V-Tun)</small>
+			{/if}
 		</div>
 		<div class="linkers">
 			{#each status.Linker as lk}
