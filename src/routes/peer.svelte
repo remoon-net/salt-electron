@@ -14,6 +14,12 @@
 	const showSnackbar = getSnackbarShow()
 	import pp from 'pretty-bytes'
 	import { DateTime } from 'luxon'
+	import { PCStatus } from '$lib/xhe'
+	function getPCS(ep: string): PCStatus {
+		// @ts-ignore
+		return new URL('peer://' + ep).port - 1
+	}
+	$inspect(peer.LastHandshakeTime)
 </script>
 
 <h4 class="mb-0">
@@ -22,20 +28,57 @@
 	</a>
 </h4>
 {#if !!peer.Endpoint}
+	{@const u = new URL('peer://' + peer.Endpoint)}
+	{@const pcs = getPCS(peer.Endpoint)}
 	<div class="row g-0">
-		<div class="col">
-			{#if peer.Endpoint === '127.0.0.1:1'}
-				<small>未连接</small>
-			{:else if peer.Endpoint === '127.0.0.1:2'}
-				<small>连接中</small>
-			{:else if peer.Endpoint === '127.0.0.1:3'}
-				<small>连接中</small>
+		<div class="col status">
+			{#if u.hostname == '127.0.0.1'}
+				{#if pcs == 0}
+					<small>未连接</small>
+				{/if}
+				{#if pcs !== 0}
+					{#if (pcs & PCStatus.SignlerConnecting) != 0}
+						<small>信令连接中</small>
+					{:else if (pcs & PCStatus.SignlerConnected) != 0}
+						<small>信令已连接</small>
+					{:else if (pcs & PCStatus.SignlerOpened) != 0}
+						<small>信令通信中</small>
+					{:else if (pcs & PCStatus.SignlerClosed) != 0}
+						<small>信令已关闭</small>
+					{:else}
+						<small>信令状态 {pcs}</small>
+					{/if}
+				{/if}
+				<!-- 优先展示数据通道的状态 -->
+				{#if pcs >> 8 != 0}
+					{#if (pcs & PCStatus.DCConnecting) != 0}
+						<small>通道打开中</small>
+					{:else if (pcs & PCStatus.DCConnected) != 0}
+						<small>通道已打开</small>
+					{:else if (pcs & PCStatus.DCClosed) != 0}
+						<small>通道已关闭</small>
+					{:else}
+						<small>通道状态 {pcs}</small>
+					{/if}
+				{:else if pcs >> 4 != 0}
+					{#if (pcs & PCStatus.PeerConnecting) != 0}
+						<small>p2p连接中</small>
+					{:else if (pcs & PCStatus.PeerConnected) != 0}
+						<small>p2p已连接</small>
+					{:else if (pcs & PCStatus.PeerClosed) != 0}
+						<small>p2p已关闭</small>
+					{:else}
+						<small>p2p状态 {pcs}</small>
+					{/if}
+				{/if}
 			{:else}
-				{@const beforeNow = DateTime.fromISO(peer.LastHandshakeTime!).toRelative({
+				<small>{peer.Endpoint}</small>
+			{/if}
+			{#if !!peer.LastHandshakeTime}
+				{@const beforeNow = DateTime.fromISO(peer.LastHandshakeTime).toRelative({
 					style: 'short',
 					unit: 'seconds',
 				})}
-				<small>{peer.Endpoint}</small>
 				<small class="last-handshake-time" title="上次握手时间" use:tooltip>({beforeNow})</small>
 			{/if}
 		</div>
@@ -80,9 +123,7 @@
 <div class="row row-cols-auto g-1">
 	{#if !!peer.Auto}
 		<div class="col">
-			<span class="badge text-bg-primary">
-				Auto
-			</span>
+			<span class="badge text-bg-primary"> Auto </span>
 		</div>
 	{/if}
 	{#each peer.ICE as ice}
@@ -103,6 +144,9 @@
 		display: block;
 	}
 	.last-handshake-time {
+		white-space: nowrap;
+	}
+	.status small {
 		white-space: nowrap;
 	}
 </style>

@@ -92,3 +92,22 @@ const xhe: XhePlugin = {
 }
 
 export default xhe
+
+export const enum PCStatus {
+	Ready = 0b0,
+
+	SignlerConnecting = 0b0001,
+	SignlerConnected = 0b0010,
+	SignlerOpened = 0b0100,
+	SignlerClosed = 0b1000,
+
+	PeerConnecting = 0b0001 << 4,
+	PeerConnected = 0b0010 << 4,
+	PeerClosed = 0b0100 << 4,
+	PeerFailed = 0b1000 << 4,
+
+	DCConnecting = 0b0001 << 8,
+	DCConnected = 0b0010 << 8,
+	DCClosed = 0b0100 << 8,
+	DCFailed = 0b1000 << 8,
+}
