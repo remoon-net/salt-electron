@@ -49,12 +49,22 @@ public class XhePlugin extends Plugin {
         call.resolve();
     }
 
+    private boolean initialized = false;
+
     @PluginMethod()
     public void set(PluginCall call) throws Exception {
         var selector = call.getString("selector");
         var action = call.getString("action");
         var value = call.getString("value");
+        var initConfig = selector.equals("settings") && action.equals("init");
+        if(initConfig && initialized){
+            call.resolve();
+            return;
+        }
         Libvpn.set(selector, action, value);
+        if(initConfig){
+            initialized = true;
+        }
         call.resolve();
     }
 
