@@ -26,6 +26,12 @@ public class XhePlugin extends Plugin {
 
     @PluginMethod()
     public void start(PluginCall call) throws Exception {
+        var vtun =Libvpn.get("VTun");
+        if(!vtun.equals("")){
+            Libvpn.start(Libvpn.TargetAll);
+            call.resolve();
+            return;
+        }
         var ctx = getContext();
         var intent = VpnService.prepare(ctx);
         if( intent != null) {
