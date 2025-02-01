@@ -17,9 +17,8 @@
 	import { PCStatus } from '$lib/xhe'
 	function getPCS(ep: string): PCStatus {
 		// @ts-ignore
-		return new URL('peer://' + ep).port - 1
+		return new URL('http://' + ep).port - 1
 	}
-	$inspect(peer.LastHandshakeTime)
 </script>
 
 <h4 class="mb-0">
@@ -28,7 +27,7 @@
 	</a>
 </h4>
 {#if !!peer.Endpoint}
-	{@const u = new URL('peer://' + peer.Endpoint)}
+	{@const u = new URL('http://' + peer.Endpoint)}
 	{@const pcs = getPCS(peer.Endpoint)}
 	<div class="row g-0">
 		<div class="col status">
