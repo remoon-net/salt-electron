@@ -100,7 +100,7 @@
 				name="WHIP"
 				id="whip"
 				class="form-control"
-				placeholder="http://...."
+				placeholder="wss://...."
 				bind:value={whip}
 				readonly={isView}
 				rows="3"

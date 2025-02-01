@@ -213,7 +213,7 @@
 							name="WHIP"
 							id={i === allows.length - 1 ? 'whip-last' : ''}
 							class="form-control"
-							placeholder="WHIP"
+							placeholder="wss://...."
 							bind:value={whips[i]}
 							required
 							disabled={pending.value}
