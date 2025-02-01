@@ -53,7 +53,7 @@
 				<h5 class="modal-title">FAQ (名词解释)</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<iframe bind:this={faq} class="modal-body p-0" src="/faq/" title="弹幕登录" frameborder="0"
+			<iframe bind:this={faq} class="modal-body p-0" src="/faq/" title="FAQ名词解释" frameborder="0"
 			></iframe>
 			<!-- <div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> 关闭 </button>
