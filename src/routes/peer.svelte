@@ -18,8 +18,9 @@
 	let pcs = $derived.by<PCStatus>(() => {
 		try {
 			// @ts-ignore
-			return new URL('http://' + ep).port - 1
+			return new URL('http://' + peer.Endpoint).port - 1
 		} catch {
+			alert(`解析Endpoint出错: ${peer.Endpoint}`)
 			return 0
 		}
 	})
