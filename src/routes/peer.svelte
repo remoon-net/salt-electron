@@ -15,10 +15,22 @@
 	import pp from 'pretty-bytes'
 	import { DateTime } from 'luxon'
 	import { PCStatus } from '$lib/xhe'
-	function getPCS(ep: string): PCStatus {
-		// @ts-ignore
-		return new URL('http://' + ep).port - 1
-	}
+	let pcs = $derived.by<PCStatus>(() => {
+		try {
+			// @ts-ignore
+			return new URL('http://' + ep).port - 1
+		} catch {
+			return 0
+		}
+	})
+	let u = $derived.by(() => {
+		try {
+			return new URL('http://' + peer.Endpoint)
+		} catch {
+			alert(`解析Endpoint出错: ${peer.Endpoint}`)
+			return new URL('http://remoon.net')
+		}
+	})
 </script>
 
 <h4 class="mb-0">
@@ -27,8 +39,6 @@
 	</a>
 </h4>
 {#if !!peer.Endpoint}
-	{@const u = new URL('http://' + peer.Endpoint)}
-	{@const pcs = getPCS(peer.Endpoint)}
 	<div class="row g-0">
 		<div class="col status">
 			{#if u.hostname == '127.0.0.1'}
