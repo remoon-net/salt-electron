@@ -5,7 +5,7 @@
 	}
 	const { ICEs, Tags }: Props = $props()
 
-	let iceTags = $derived(Tags.filter((s) => s !== 'direct'))
+	let iceTags = $derived(Tags.filter((s) => !['direct', 'nowsc'].includes(s)))
 
 	let selectedTags = $state([])
 	let displayICEs = $derived.by(() => {

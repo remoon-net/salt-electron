@@ -37,9 +37,22 @@
 		return data.tags.concat(customTags)
 	})
 
-	function addTag() {
-		let t = prompt('添加新的 Tag')
+	import { getPrompt, getAlert } from '@remoon.net/bootstrap'
+
+	const prompt = getPrompt()
+	const alert = getAlert()
+	async function addTag() {
+		let t = await prompt('添加新的 Tag')
 		if (typeof t != 'string') {
+			return
+		}
+		t = t.trim()
+		if (customTags.includes(t)) {
+			await alert(`${t} 已存在, 不要重复添加`)
+			return
+		}
+		if (['nowsc', 'direct', 'relay'].includes(t)) {
+			await alert(`${t} 是保留 tag 不允许添加. 保留tags: direct, relay, nowsc`)
 			return
 		}
 		customTags.push(t)

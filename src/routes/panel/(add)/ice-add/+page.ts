@@ -14,7 +14,7 @@ export async function load({ url }) {
 		ice = status.ICE[index]
 	}
 	return {
-		tags: status.ICETags.filter((s) => s !== 'direct'),
+		tags: status.ICETags.filter((s) => !['direct', 'nowsc'].includes(s)),
 		ice: ice,
 		index: url.searchParams.has('index') ? url.searchParams.get('index') : null,
 	}
