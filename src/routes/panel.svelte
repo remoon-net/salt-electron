@@ -20,11 +20,11 @@
 		if (!s.Running && !s.Error) {
 			return DisplayStatus.Ready
 		}
-		if (s.Running) {
-			return DisplayStatus.Running
-		}
 		if (!!s.Error) {
 			return DisplayStatus.Error
+		}
+		if (s.Running) {
+			return DisplayStatus.Running
 		}
 		return DisplayStatus.Unkown
 	}
