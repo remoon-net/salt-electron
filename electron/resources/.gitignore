@@ -1,2 +1,3 @@
 *.bin
 *.wasm
+wintun.dll
