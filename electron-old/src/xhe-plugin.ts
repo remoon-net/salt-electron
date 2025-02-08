@@ -64,7 +64,7 @@ export async function load() {
 			cmd = ['pkexec', bin]
 			break
 		case 'win32':
-			cmd = [bin]
+			cmd = ['./gsudo', bin]
 			break
 		default:
 			throw new Error(`This platform "${process.platform}" is not supported now.`)
