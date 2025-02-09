@@ -5,6 +5,9 @@ import { defineConfig } from 'vite'
 const faker = path.resolve('./node_modules/@remoon.net/bootstrap/faker.js')
 
 export default defineConfig({
+	build: {
+		target: 'es2015',
+	},
 	plugins: [sveltekit()],
 	server: {
 		host: 'salt-vpn.lo.remoon.net',
