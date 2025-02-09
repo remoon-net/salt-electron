@@ -27,6 +27,7 @@
 		"bootstrap": "^5.3.3",
 		"bootstrap-icons": "^1.11.3",
 		"buffer": "^6.0.3",
+		"cap-electron": "link:/home/shynome/work/github.com/shynome/cap-electron",
 		"ip": "^2.0.1",
 		"ip-address": "^10.0.1",
 		"luxon": "^3.5.0",
@@ -41,7 +42,6 @@
 		"vite": "^5.0.3"
 	},
 	"dependencies": {
-		"@capacitor-community/electron": "npm:@shynome/capacitorjs-electron@^5.1.0",
 		"@capacitor/android": "^6.2.0",
 		"@capacitor/core": "^6.2.0"
 	},
