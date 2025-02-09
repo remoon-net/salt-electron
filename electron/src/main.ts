@@ -5,7 +5,7 @@ import serve from 'electron-serve'
 import windowStateKeeper from 'electron-window-state'
 import plugins from './rt/plugins'
 import { setupCapacitorElectronPlugins } from 'cap-electron'
-import { init as xheInit } from './xhe'
+import xhe, { init as xheInit } from './xhe'
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -23,6 +23,7 @@ const createWindow = async () => {
 	})
 
 	await xheInit
+	await xhe.get({ selector: 'status' })
 	setupCapacitorElectronPlugins(plugins)
 
 	// Create the browser window.

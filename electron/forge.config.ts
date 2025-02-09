@@ -20,6 +20,7 @@ const config: ForgeConfig = {
 			}
 			return true
 		},
+		extraResource: ['resources/'],
 	},
 	rebuildConfig: {},
 	makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerDeb({})],
