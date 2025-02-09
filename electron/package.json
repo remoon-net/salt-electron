@@ -1,0 +1,51 @@
+{
+	"name": "salt-vpn",
+	"productName": "Salt VPN",
+	"version": "0.0.1",
+	"description": "My Electron application description",
+	"main": ".vite/build/main.js",
+	"scripts": {
+		"start": "electron-forge start",
+		"package": "electron-forge package",
+		"make": "electron-forge make",
+		"publish": "electron-forge publish",
+		"lint": "eslint --ext .ts,.tsx ."
+	},
+	"devDependencies": {
+		"@electron-forge/cli": "^7.6.1",
+		"@electron-forge/maker-deb": "^7.6.1",
+		"@electron-forge/maker-squirrel": "^7.6.1",
+		"@electron-forge/maker-zip": "^7.6.1",
+		"@electron-forge/plugin-auto-unpack-natives": "^7.6.1",
+		"@electron-forge/plugin-fuses": "^7.6.1",
+		"@electron-forge/plugin-vite": "^7.6.1",
+		"@electron-forge/shared-types": "^7.6.1",
+		"@electron/asar": "^3.2.18",
+		"@electron/fuses": "^1.8.0",
+		"@electron/packager": "^18.3.6",
+		"@types/electron-squirrel-startup": "^1.0.2",
+		"@typescript-eslint/eslint-plugin": "^5.0.0",
+		"@typescript-eslint/parser": "^5.0.0",
+		"electron": "34.1.1",
+		"electron-is-dev": "^3.0.1",
+		"electron-store": "^8.2.0",
+		"eslint": "^8.0.1",
+		"eslint-plugin-import": "^2.25.0",
+		"performance": "^1.4.0",
+		"ts-node": "^10.9.2",
+		"typescript": "~5.7.3",
+		"vite": "^5.0.12",
+		"web-streams-polyfill": "^4.1.0"
+	},
+	"keywords": [],
+	"author": {
+		"name": "shynome",
+		"email": "shynome@gmail.com"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"electron-serve": "^2.1.1",
+		"electron-squirrel-startup": "^1.0.1",
+		"electron-window-state": "^5.0.3"
+	}
+}
