@@ -2,7 +2,7 @@
 	"name": "salt-vpn",
 	"productName": "Salt VPN",
 	"version": "0.0.1",
-	"description": "My Electron application description",
+	"description": "Salt VPN(盐选组网) 帮助你和你的好友建立局域网连接, 进行联机游戏",
 	"main": ".vite/build/main.js",
 	"scripts": {
 		"start": "electron-forge start",
