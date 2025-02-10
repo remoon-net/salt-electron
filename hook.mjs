@@ -37,7 +37,10 @@ async function updateAfter() {
 				$`wget -qO electron/resources/salt-vpn-ipc.wasm ${ipcWasm}`.then(() => {
 					console.log(`salt-vpn-ipc.wasm 下载完成`)
 				}),
-				$`wget -qO electron/resources/salt-vpn.bin ${saltBin}`.then(() => {
+				$`wget -qO electron/resources/salt-vpn.bin ${saltBin}`.then(async () => {
+					if (process.platform === 'linux') {
+						await $`chmod +x electron/resources/salt-vpn.bin`
+					}
 					console.log(`salt-vpn.bin 下载完成`)
 				}),
 			]
