@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, nativeImage } from 'electron'
 import path from 'node:path'
 import started from 'electron-squirrel-startup'
 import serve from 'electron-serve'
@@ -16,6 +16,14 @@ const loadURL = serve({
 	directory: path.join(app.getAppPath(), `./app`),
 })
 
+const iconPath = path.join(
+	app.getAppPath(),
+	'assets',
+	process.platform === 'win32' ? 'salt-icon.ico' : 'salt-icon.png',
+)
+
+console.log('Icon path:', iconPath)
+
 const createWindow = async () => {
 	const mainWindowState = windowStateKeeper({
 		defaultWidth: 460,
@@ -26,8 +34,11 @@ const createWindow = async () => {
 	await xhe.get({ selector: 'status' })
 	setupCapacitorElectronPlugins(plugins)
 
+	const icon = nativeImage.createFromPath(iconPath)
+
 	// Create the browser window.
 	const mainWindow = new BrowserWindow({
+		icon: icon,
 		minWidth: 460,
 		minHeight: 745,
 		width: mainWindowState.width,

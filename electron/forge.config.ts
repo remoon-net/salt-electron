@@ -10,6 +10,7 @@ const config: ForgeConfig = {
 	packagerConfig: {
 		asar: true,
 		executableName: 'salt-vpn',
+		icon: 'assets/salt-icon',
 		ignore: (file: string) => {
 			if (!file) return false
 			if (file.startsWith('/.vite')) {
@@ -18,12 +19,23 @@ const config: ForgeConfig = {
 			if (file.startsWith('/app')) {
 				return false
 			}
+			if (file.startsWith('/assets')) {
+				return false
+			}
 			return true
 		},
 		extraResource: ['resources/'],
 	},
 	rebuildConfig: {},
-	makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerDeb({})],
+	makers: [
+		new MakerSquirrel({}),
+		new MakerZIP({}, ['darwin']),
+		new MakerDeb({
+			options: {
+				icon: 'assets/salt-icon.png',
+			},
+		}),
+	],
 	plugins: [
 		new VitePlugin({
 			// `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
