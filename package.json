@@ -9,17 +9,16 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check .",
-		"capacitor:copy:before": "rm build/wasm/libvpn.wasm"
+		"lint": "prettier --check ."
 	},
 	"devDependencies": {
 		"@capacitor/cli": "^6.2.0",
 		"@capacitor/preferences": "^6.0.3",
-		"@remoon.net/bootstrap": "link:../bootstrap",
-		"@sveltejs/adapter-auto": "^3.0.0",
+		"@remoon.net/bootstrap": "^0.2.3",
+		"@sveltejs/adapter-auto": "^4.0.0",
 		"@sveltejs/adapter-static": "^3.0.6",
 		"@sveltejs/kit": "^2.16.1",
-		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@types/bootstrap": "^5.2.10",
 		"@types/golang-wasm-exec": "^1.15.2",
 		"@types/luxon": "^3.4.2",
@@ -27,7 +26,7 @@
 		"bootstrap": "^5.3.3",
 		"bootstrap-icons": "^1.11.3",
 		"buffer": "^6.0.3",
-		"cap-electron": "link:/home/shynome/work/github.com/shynome/cap-electron",
+		"cap-electron": "^0.0.4",
 		"ip": "^2.0.1",
 		"ip-address": "^10.0.1",
 		"luxon": "^3.5.0",
@@ -39,11 +38,16 @@
 		"svelte-check": "^4.0.0",
 		"svelte-copy": "^2.0.0",
 		"typescript": "^5.0.0",
-		"vite": "^5.0.3"
+		"vite": "^6.0.0"
 	},
 	"dependencies": {
 		"@capacitor/android": "^6.2.0",
 		"@capacitor/core": "^6.2.0"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild"
+		]
 	},
 	"packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
 }

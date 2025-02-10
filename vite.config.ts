@@ -18,6 +18,9 @@ export default defineConfig({
 				find: 'bootstrap',
 				replacement: path.resolve('./node_modules/bootstrap'),
 				customResolver(source, importer, options) {
+					if (source.endsWith('ss')) {
+						return
+					}
 					// @ts-ignore
 					if (options.ssr) {
 						return faker
