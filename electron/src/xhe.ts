@@ -21,12 +21,13 @@ import { readFile } from 'fs/promises'
 
 import { app } from 'electron'
 import { join } from 'path'
-import electronIsDev from 'electron-is-dev'
+import isDev from 'electron-is-dev'
 import { CapacitorPlugin, PluginMethod } from 'cap-electron'
 
-const fixedPath = electronIsDev ? '' : '../'
+const fixedPath = isDev ? '' : '../'
 const wasm: string = join(app.getAppPath(), fixedPath, './resources/salt-vpn-ipc.wasm')
 const bin: string = join(app.getAppPath(), fixedPath, './resources/salt-vpn.bin')
+const gsudo: string = join(app.getAppPath(), fixedPath, './resources/gsudo.exe')
 
 export const init = Promise.resolve().then(async () => {
 	const stdin = new PassThrough()
@@ -60,9 +61,12 @@ export const init = Promise.resolve().then(async () => {
 	switch (process.platform) {
 		case 'linux':
 			cmd = ['pkexec', bin]
+			if (isDev) {
+				cmd = [bin]
+			}
 			break
 		case 'win32':
-			cmd = ['./gsudo', bin]
+			cmd = [gsudo, bin]
 			break
 		default:
 			throw new Error(`This platform "${process.platform}" is not supported now.`)
