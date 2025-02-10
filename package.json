@@ -10,7 +10,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check .",
-		"capacitor:copy:after": "node hook.mjs"
+		"capacitor:copy:after": "node hook.mjs copy-after",
+		"capacitor:update:after": "node hook.mjs update-after"
 	},
 	"devDependencies": {
 		"@capacitor/cli": "^6.2.0",
