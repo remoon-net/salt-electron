@@ -58,8 +58,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       cap-electron:
-        specifier: ^0.0.4
-        version: 0.0.4(@capacitor/cli@6.2.0)(@capacitor/core@6.2.0)(electron@34.1.1)
+        specifier: ^0.0.5
+        version: 0.0.5(@capacitor/cli@6.2.0)(@capacitor/core@6.2.0)(electron@34.1.1)
       ip:
         specifier: ^2.0.1
         version: 2.0.1
@@ -96,6 +96,9 @@ importers:
       vite:
         specifier: ^6.0.0
         version: 6.1.0(@types/node@22.10.3)(sass-embedded@1.81.0)
+      zx:
+        specifier: ^8.3.2
+        version: 8.3.2
 
 packages:
 
@@ -509,6 +512,9 @@ packages:
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
 
+  '@types/fs-extra@11.0.4':
+    resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
+
   '@types/fs-extra@8.1.5':
     resolution: {integrity: sha512-0dzKcwO+S8s2kuF5Z9oUWatQJj5Uq/iqphEtE3GQJVRRYm/tD1LglU2UnXi2A8jLq5umkGouOXOR9y0n613ZwQ==}
 
@@ -517,6 +523,9 @@ packages:
 
   '@types/http-cache-semantics@4.0.4':
     resolution: {integrity: sha512-1m0bIFVc7eJWyve9S0RnuRgcQqF/Xd5QsUZAZeQFr1Q3/p9JWoQQEqmVy+DPTNpGXwhgIetAoYF8JSc33q29QA==}
+
+  '@types/jsonfile@6.1.4':
+    resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
   '@types/keyv@3.1.4':
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
@@ -631,8 +640,8 @@ packages:
     resolution: {integrity: sha512-v+p6ongsrp0yTGbJXjgxPow2+DL93DASP4kXCDKb8/bwRtt9OEF3whggkkDkGNzgcWy2XaF4a8nZglC7uElscg==}
     engines: {node: '>=8'}
 
-  cap-electron@0.0.4:
-    resolution: {integrity: sha512-KHkqBu7kKEtOywnJTWJBjyh4mFihlg7ISaEb83qZyRN/vFp4CLJZpP9J+fJADR82s7390qkga40lekWqeIb3gg==}
+  cap-electron@0.0.5:
+    resolution: {integrity: sha512-yC1fx86bshqhBhwNQ5+N5botEYKacptpEfKEb9N8gGV6E5PK5TGeI7tr1Y6E2JzqiQ2neZMa+tkN1fwV0q3+EA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@capacitor/cli': '6'
@@ -1604,6 +1613,11 @@ packages:
   zimmerframe@1.1.2:
     resolution: {integrity: sha512-rAbqEGa8ovJy4pyBxZM70hg4pE6gDgaQ0Sl9M3enG3I0d6H4XSAM3GeNGLKnsBpuijUow064sf7ww1nutC5/3w==}
 
+  zx@8.3.2:
+    resolution: {integrity: sha512-qjTunv1NClO05jDaUjrNZfpqC9yvNCchge/bzOcQevsh1aM5qE3TG6MY24kuQKlOWx+7vNuhqO2wa9nQCIGvZA==}
+    engines: {node: '>= 12.17.0'}
+    hasBin: true
+
 snapshots:
 
   '@ampproject/remapping@2.3.0':
@@ -2004,6 +2018,12 @@ snapshots:
 
   '@types/estree@1.0.6': {}
 
+  '@types/fs-extra@11.0.4':
+    dependencies:
+      '@types/jsonfile': 6.1.4
+      '@types/node': 22.10.3
+    optional: true
+
   '@types/fs-extra@8.1.5':
     dependencies:
       '@types/node': 22.10.3
@@ -2011,6 +2031,11 @@ snapshots:
   '@types/golang-wasm-exec@1.15.2': {}
 
   '@types/http-cache-semantics@4.0.4': {}
+
+  '@types/jsonfile@6.1.4':
+    dependencies:
+      '@types/node': 22.10.3
+    optional: true
 
   '@types/keyv@3.1.4':
     dependencies:
@@ -2107,7 +2132,7 @@ snapshots:
       normalize-url: 6.1.0
       responselike: 2.0.1
 
-  cap-electron@0.0.4(@capacitor/cli@6.2.0)(@capacitor/core@6.2.0)(electron@34.1.1):
+  cap-electron@0.0.5(@capacitor/cli@6.2.0)(@capacitor/core@6.2.0)(electron@34.1.1):
     dependencies:
       '@capacitor/cli': 6.2.0
       '@capacitor/core': 6.2.0
@@ -3024,3 +3049,8 @@ snapshots:
       fd-slicer: 1.1.0
 
   zimmerframe@1.1.2: {}
+
+  zx@8.3.2:
+    optionalDependencies:
+      '@types/fs-extra': 11.0.4
+      '@types/node': 22.10.3
