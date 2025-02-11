@@ -5,6 +5,7 @@ import { MakerDeb } from '@electron-forge/maker-deb'
 import { VitePlugin } from '@electron-forge/plugin-vite'
 import { FusesPlugin } from '@electron-forge/plugin-fuses'
 import { FuseV1Options, FuseVersion } from '@electron/fuses'
+import { PublisherS3 } from '@electron-forge/publisher-s3'
 
 const config: ForgeConfig = {
 	packagerConfig: {
@@ -28,11 +29,31 @@ const config: ForgeConfig = {
 	},
 	rebuildConfig: {},
 	makers: [
-		new MakerSquirrel({}),
-		new MakerZIP({}, ['darwin']),
+		new MakerSquirrel((arch) => ({
+			remoteReleases: `https://salt-resources.remoon.net/salt-vpn/win32-${arch}`,
+		})),
+		new MakerZIP(
+			(arch) => ({
+				macUpdateManifestBaseUrl: `https://salt-resources.remoon.net/salt-vpn/darwin-${arch}`,
+			}),
+			['darwin'],
+		),
 		new MakerDeb({
 			options: {
 				icon: 'assets/salt-icon.png',
+				categories: ['Network'],
+				section: 'net',
+				depends: ['iproute2', 'policykit-1'],
+				homepage: 'https://salt.remoon.net/vpn/',
+			},
+		}),
+	],
+	publishers: [
+		new PublisherS3({
+			bucket: 'salt-resources',
+			public: true,
+			keyResolver(fileName, platform, arch) {
+				return `salt-vpn/${platform}-${arch}/${fileName}`
 			},
 		}),
 	],

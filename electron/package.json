@@ -19,6 +19,7 @@
 		"@electron-forge/plugin-auto-unpack-natives": "^7.6.1",
 		"@electron-forge/plugin-fuses": "^7.6.1",
 		"@electron-forge/plugin-vite": "^7.6.1",
+		"@electron-forge/publisher-s3": "^7.6.1",
 		"@electron-forge/shared-types": "^7.6.1",
 		"@electron/asar": "^3.2.18",
 		"@electron/fuses": "^1.8.0",
@@ -47,6 +48,7 @@
 		"cap-electron": "^0.0.4",
 		"electron-serve": "^2.1.1",
 		"electron-squirrel-startup": "^1.0.1",
-		"electron-window-state": "^5.0.3"
+		"electron-window-state": "^5.0.3",
+		"update-electron-app": "^3.1.1"
 	}
 }

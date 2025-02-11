@@ -7,6 +7,7 @@ import plugins from './rt/plugins'
 import { setupCapacitorElectronPlugins } from 'cap-electron'
 import xhe, { init as xheInit } from './xhe'
 import isDev from 'electron-is-dev'
+import { updateElectronApp, UpdateSourceType } from 'update-electron-app'
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -80,6 +81,16 @@ void (async function main() {
 	}
 
 	tray()
+
+	if (!isDev) {
+		updateElectronApp({
+			updateSource: {
+				type: UpdateSourceType.StaticStorage,
+				baseUrl: `https://salt-resources.remoon.net/salt-vpn/${process.platform}-${process.arch}`,
+			},
+			updateInterval: '24 hour',
+		})
+	}
 })().catch((err) => {
 	console.error(err)
 	app.quit()
