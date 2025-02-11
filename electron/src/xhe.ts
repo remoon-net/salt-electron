@@ -72,7 +72,10 @@ export const init = Promise.resolve().then(async () => {
 			throw new Error(`This platform "${process.platform}" is not supported now.`)
 	}
 
-	const proc = spawn(cmd[0], cmd.slice(1), { stdio: ['pipe', 'pipe', 'inherit'] })
+	const proc = spawn(cmd[0], cmd.slice(1), {
+		stdio: ['pipe', 'pipe', 'inherit'],
+		windowsHide: true,
+	})
 	stdout.pipe(proc.stdin)
 	proc.stdout.pipe(stdin)
 	if (proc.exitCode) {
