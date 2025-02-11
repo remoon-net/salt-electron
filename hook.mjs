@@ -70,10 +70,11 @@ import fs from 'fs/promises'
  * @param {string} link
  */
 async function download(output, link) {
-	const resp = await fetch(link, { redirect: 'follow' })
 	const dn = output.replace('electron/resources/', '')
+	console.log(`${dn} 开始下载`)
+	const resp = await fetch(link, { redirect: 'follow' })
 	if (resp.status != 200) {
-		throw new Error(`${dn} 下载出错. status: ${resp.statusText}`)
+		throw new Error(`${dn} 下载出错. status: ${resp.statusText}, link: ${link}`)
 	}
 	const blob = await resp.bytes()
 	await fs.writeFile(output, blob)
