@@ -28,7 +28,7 @@ async function updateAfter() {
 	console.log(`下载必要的二进制文件中`)
 	switch (platform) {
 		case 'android':
-			await $`wget -qO android/app/libs/libvpn.aar ${aar}`
+			await download('android/app/libs/libvpn.aar', aar)
 			break
 		case 'cap-electron':
 			await $`rm -rf electron/resources/*`
