@@ -34,24 +34,17 @@ async function updateAfter() {
 			await $`rm -rf electron/resources/*`
 			await $`touch electron/resources/.gitkeep`
 			let tasks = [
-				$`wget -qO electron/resources/salt-vpn-ipc.wasm ${ipcWasm}`.then(() => {
-					console.log(`salt-vpn-ipc.wasm 下载完成`)
-				}),
-				$`wget -qO electron/resources/salt-vpn.bin ${saltBin}`.then(async () => {
+				download('electron/resources/salt-vpn-ipc.wasm', ipcWasm),
+				download('electron/resources/salt-vpn.bin', saltBin).then(async () => {
 					if (process.platform === 'linux') {
 						await $`chmod +x electron/resources/salt-vpn.bin`
 					}
-					console.log(`salt-vpn.bin 下载完成`)
 				}),
 			]
 			if (process.platform === 'win32') {
 				tasks.push(
-					$`wget -qO electron/resources/gsudo.exe ${gsudo}`.then(() => {
-						console.log(`gsudo.exe 下载完成`)
-					}),
-					$`wget -qO electron/resources/wintun.dll ${wintun}`.then(() => {
-						console.log(`wintun.dll 下载完成`)
-					}),
+					download('electron/resources/gsudo.exe', gsudo),
+					download('electron/resources/wintun.dll', wintun),
 				)
 			}
 			await Promise.all(tasks)
@@ -69,3 +62,20 @@ void (function main() {
 		return updateAfter()
 	}
 })()
+
+import fs from 'fs/promises'
+/**
+ *
+ * @param {string} output
+ * @param {string} link
+ */
+async function download(output, link) {
+	const resp = await fetch(link, { redirect: 'follow' })
+	const dn = output.replace('electron/resources/', '')
+	if (resp.status != 200) {
+		throw new Error(`${dn} 下载出错. status: ${resp.statusText}`)
+	}
+	const blob = await resp.bytes()
+	await fs.writeFile(output, blob)
+	console.log(`${dn} 下载完成`)
+}
