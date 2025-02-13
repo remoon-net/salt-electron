@@ -8,6 +8,7 @@ const ver = `v0.0.2`
 const resSrv = `https://salt-resources.remoon.net`
 const aar = `${resSrv}/libvpn/${ver}/libvpn.aar`
 const ipcWasm = `${resSrv}/libvpn/${ver}/salt-vpn-ipc.wasm`
+const libvpnWasm = `${resSrv}/libvpn/${ver}/libvpn.wasm`
 const saltBin = `${resSrv}/libvpn/${ver}/salt-vpn-${process.platform}-${process.arch}.bin`
 const gsudo = `${resSrv}/gsudo/v2.5.1/gsudo-${process.arch}.exe`
 const wintun = `${resSrv}/wintun/0.14.1/wintun-${process.arch}.dll`
@@ -27,6 +28,9 @@ async function copyAfter() {
 async function updateAfter() {
 	console.log(`下载必要的二进制文件中`)
 	switch (platform) {
+		case 'web':
+			await download('static/wasm/libvpn.wasm', libvpnWasm)
+			break
 		case 'android':
 			await download('android/app/libs/libvpn.aar', aar)
 			break
